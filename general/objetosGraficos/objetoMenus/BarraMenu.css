@@ -1,0 +1,24 @@
+
+.menuTitulo:hover{
+	background-color:rgb(200,200,200);
+	color:#225599;
+}
+
+.menuTitulo{
+	width: 100%;
+	color: white;	
+	font-weight: bold;
+	padding-top: 7px;	
+	padding-left: 15px;
+	height: 35px;
+	cursor: pointer;
+}
+.panelMenuPrincipal{
+	width: 100%;
+	height: 35px;
+	background-color:rgb(100,100,100);
+	position: absolute;
+	z-index: 1;
+	top: 0px;
+
+}

@@ -1,0 +1,93 @@
+.divPasos{
+
+}
+
+.divObjetoPasos{
+	position: absolute;
+	width: 100%;
+	height: 258px;	
+}
+
+.encabezadoPasos{
+	 color:#009998;
+	 padding-top: 10px;
+	 padding-bottom: 20px;
+	 font-size:20px;
+	 font-weight: bold;
+	 background-color: #eeeeee;
+	 padding-left: 20px;
+}
+
+.descripcionPaso{
+	color:#889998;	 
+	padding-bottom: 5px;
+	width: 100%;
+	text-align: center;
+}
+
+.divContenidoPaso2 .hijoPaso{	
+	float: left;
+}
+
+.divContenidoPaso2{
+	overflow: hidden;			
+	margin: auto auto;	
+	width: 700px;
+}
+.divContenidoPaso{	
+	width: 100%;		
+}
+
+.navegacionPasos{
+	width: 100%;
+	background-color: blue;	
+	position: absolute;
+	background-color: #dddddd;
+	height: 30px;	
+	bottom: 0px;
+}
+
+
+.botonFlechaIzquierdaPasos{
+	cursor: pointer;		
+	position: absolute;
+	left: 10px;
+	width: 110px;
+	height: 30px;	
+	overflow: hidden;
+}
+
+.botonFlechaDerechaPasos div,.botonFlechaIzquierdaPasos div{
+	float: left;		
+	padding:5px;
+	height: 100%;
+	font-weight: bold;
+}
+
+
+.botonFlechaIzquierdaPasosImagen{	
+	width: 40px;	
+	max-width: 40px;	
+	background-image: url("flechaIzquierda.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;	
+}
+
+.botonFlechaDerechaPasos{	
+	cursor: pointer;		
+	position: absolute;
+	top: 0px;
+	right: 10px;
+	width: 120px;
+	height: 30px;	
+	overflow: hidden;
+}
+
+.botonFlechaDerechaPasosImagen{	
+	width: 40px;		
+	max-width: 40px;	
+	background-image: url("flechaDerecha.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;	
+
+}

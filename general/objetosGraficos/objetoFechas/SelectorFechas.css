@@ -1,0 +1,116 @@
+.divSelectorFechas{
+	position: absolute;
+	z-index: 105;	
+	width: 200px;
+	height: 230px;	
+}
+.divCampoFecha{
+	position: absolute;
+	width: 100%;
+	height: 28px;	
+	padding-top:2px;
+	padding-bottom: 2px;
+	padding-left: 1%;
+	padding-right: 1%;
+	border: solid 1px #dddddd;
+}
+.divCampoFecha input{
+	width: 88%;
+	height: 22px;
+}
+.divCampoFecha img{	
+	position: absolute;
+	left: 90%;	
+	width: 10%;
+	height: 24px;
+	cursor: pointer;
+
+}
+
+.divDesplegable{
+	display: none;
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	top:28px;
+	height: 200px;
+	background-color: red;
+	padding-left: 1%;
+	padding-right: 1%;
+	border: solid 1px #bbbbbb;	
+}
+
+.divTablaFecha{	
+	position: absolute;
+	width: 100%;
+	height: 170px;
+	top:0px;
+	left:0px;
+	display: block;
+	background-color: white;	
+}
+
+.divMesesAnios{	
+	position: absolute;
+	width: 100%;
+	height: 30px;		
+}
+
+.tablaCalendario{
+	position:absolute; 
+	max-width:100%; height:140px;
+	left:0px; 
+	top:30px; 
+	background-color:#eeeeee;
+}
+
+
+
+.tablaCalendario td{
+	cursor: pointer;
+	width: 35px;
+	height: 10px;
+	text-align: center;
+}
+.columnaCalendario td{
+	padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 17px;
+    padding-right: 17px;
+    font-weight: normal;	
+}
+
+.columnaCalendario2 td{
+	padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 14px;
+    padding-right: 14px;
+    font-weight: normal;		
+}
+.botonTiempoFecha{
+	position: absolute;
+	width: 100%;
+	height: 28px;
+	top:170px;
+	left: 0px;	
+	text-align: center;
+	background-color: white;	
+}
+.botonTiempoFecha img{	
+	left: auto;
+	width: 30px;
+	height: 100%;
+	cursor: pointer;	
+}
+
+.tablaHorasFecha{
+	position:absolute; 
+	width:100%; 
+	height:170px;
+	left:0px; top:0px; 
+	background-color:#eeeeee;	
+	display: none;
+}
+.tablaHorasFecha img{
+	cursor: pointer;
+}

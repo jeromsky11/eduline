@@ -1,0 +1,19 @@
+.iconoSubirImagen{	
+	width: 360px;	
+	height: 240px;	
+	left: 20px;	
+	top: 19px;	
+	cursor:pointer;
+	opacity: 0.1;	
+	position: absolute;
+}
+
+.divBotonSubirImagen{
+	position: absolute;
+	width: 400px;
+	cursor: pointer;
+	height: 268px;
+	margin-left: 150px;	
+	border: solid 2px #aaaaaa;
+	background-color: #eeeeee;	
+}
