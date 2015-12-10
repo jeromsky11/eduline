@@ -1,0 +1,28 @@
+<html>
+	<head></head>
+	<meta charset="UTF-8">
+	<body>
+		<h1 style='width:100%; text-align:center;'>DOCUMENTACIÓN DE EDULINE</h1>
+		<div id='divCentral' style='background-color:#eeeeee; width:100%;'>
+			<div id='divIndice' style='position:absolute;width:20%; height:100%; overflow-y:scroll; ' >
+				<ul>
+					<li> <a href="#" onclick="procesarLink('/documentacion/baseDatos/basedatos.html')"> La base de datos </a></li>
+					<ul>
+						<li> <a href="#"> La tabla de roles</a></li>
+						<li> <a href="#"> La tabla de usuarios</a></li>
+					</ul>
+				</ul>				
+			</div>
+			<div id='divContenido' style='position:absolute;  left:20%; width:80%; height:100%; overflow-y:scroll; '>				
+			</div>
+		</div>
+	</body>
+	<script>
+
+		function procesarLink(url){
+			document.getElementById("divContenido").innerHTML="<object type='text/html' data='"+
+				url+"' ></object>";
+		}
+	</script>
+
+</html>
