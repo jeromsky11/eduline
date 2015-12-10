@@ -1,0 +1,61 @@
+.divBotonAgregarAreaConocimiento{
+	margin-top:5px;
+	position:relative;
+	text-align:center;
+	width:650px
+}
+.divAcordion2{
+	width:650px;
+	height:240px;
+	position: relative;
+}
+
+
+#divMisCursos{
+	width: 100%;
+	height: 373px;
+	position: absolute;
+}
+#divNotificacionesMisCursos{
+	width: 20%;
+	height: 100%;
+	background-color: white;
+	right: 0px;
+	position: absolute;
+	z-index: 15;
+	border: 2px solid black;
+}
+
+.tabbable{
+	top:50px;
+}
+#panelCursos{
+	top: -433px;
+	position: absolute;
+	height: 500px;
+	width: 100%;	
+	z-index: 1;
+}
+
+#panelCentroCursos{
+	top: 35px;
+	position: absolute;
+	height: 433px;
+	width: 100%;
+	border:solid 1px #aaaaaa;	
+}
+
+#botonDesplegarPanelCursos{
+	position: absolute;
+	bottom: 0px;
+	background-color:#aaaaaa;
+	cursor: pointer;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 5px;	
+	left: 10px;
+	border: solid 1px #000000;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;	
+	color: #004fff;
+}

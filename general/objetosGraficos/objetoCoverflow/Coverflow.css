@@ -1,0 +1,6 @@
+.divCoverflow{
+	width: 100%;
+	height: 373px;	
+	position: absolute;
+	overflow-x: hidden; 
+}

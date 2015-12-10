@@ -1,0 +1,31 @@
+.divAcordion{
+	width: 300px;
+	height: 300px;
+	position: absolute;	
+	overflow-y: scroll;		
+}
+.divNodo{
+	width: 100%;
+	position: absolute;
+}
+
+.divHijoTitulo{	
+	border: solid 1px #777777;
+	width: 100%;
+	height: 30px;
+	background-color: #aaaaaa;
+	color:white;	
+	text-align: center;
+	padding-top: 5px;
+	font-size: 18px;
+	font-weight: bold;
+}
+.divHijoContenido{	
+	width: 100%;
+	height: auto;
+	background-color: white;
+	border: solid 1px #dddddd;
+	padding: 5px;	
+	max-height: 200px;
+	overflow-y:scroll;
+}

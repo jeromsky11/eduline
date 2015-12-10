@@ -1,0 +1,24 @@
+.campoFechaInicioCurso,.campoFechaCierreCurso,.campoNombreCurso{
+	height: 30px !important;
+}
+
+
+.campoFechaInicioCurso input,.campoFechaCierreCurso input{
+	height: 100%;
+}
+
+.campoFechaInicioCurso span,.campoFechaCierreCurso span{
+	height: 100% !important;
+	padding-top: 5px;
+}
+
+.divAreasConocimiento{
+	height: 240px;
+	max-height: 240px;
+	overflow-y: scroll;
+	width: 600px;
+}
+
+.acordionAreasConocimiento{	
+	width: 100%;
+}
