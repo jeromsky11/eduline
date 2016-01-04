@@ -1,16 +1,19 @@
 var Etiqueta=function(texto){
+	//Atributos propios.	
 	this.texto=texto;
-	//Son los predeterminados de un label.
+	this.campoContenido;
+	this.campoContenidoEdicion;
+
+	//Atributos heredados
 	this.ancho=250; 
 	this.alto=100;
 	this.tipo="bloque_texto";
-	this.tipoTextual="Bloque de texto";
-	this.campoContenido;
-	this.campoContenidoEdicion;
+	this.tipoTextual="Bloque de texto";	
 }
 Etiqueta.prototype=new Componente();
 
 
+//Funciones sobrescritas.
 Etiqueta.prototype.crearEditable=function(){
 	Componente.prototype.crearEditable.call(this);
 

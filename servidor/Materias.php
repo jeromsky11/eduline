@@ -93,7 +93,7 @@
 							where id_materia=$idMateria";							
 			if(!$this->hacerConsulta()){
 				$this->abortarTransaccion();
-				print(json_encode(array("idMateria"=>-2,
+				print(json_encode(array("idMateria"=>-3,
 					"error"=>"Hubo un error al registrar la materia")));	
 				return;
 			}

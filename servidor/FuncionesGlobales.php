@@ -14,8 +14,7 @@
 	class FuncionesGlobales{
 		var $conexion;
 		var $enlace;
-		var $consulta;				
-		var $idUsuario;
+		var $consulta;						
 		function FuncionesGlobales(){
 			$this->conexion=new Conexion();
 			$this->enlace=$this->conexion->conectar();
@@ -91,7 +90,7 @@
 			if($datos)
 				return $datos;
 			else if($fila)
-				return $fila;			
+				return $fila;
 			else{
 				$this->abortarTransaccion();
 				return array();

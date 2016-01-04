@@ -15,11 +15,11 @@
 	$idUsuario=-1;
 	if($accion[0]!="usuarios" || $accion[0]=="usuarios" && $accion[1]!="loguear")
 		$idUsuario=revisarSesion();
-
-	$funcionesGlobales=new FuncionesGlobales();				
+	
 	//Ver la primera clase a la cual ir.
 	switch($accion[0]){
 		case "funcionesGlobales":			
+			$funcionesGlobales=new FuncionesGlobales();				
 			$funcionesGlobales->ejecutarAccion($accion,$variables);
 		break;
 		case "usuarios":				

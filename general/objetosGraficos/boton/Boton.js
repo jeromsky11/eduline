@@ -1,11 +1,16 @@
 var Boton=function(texto){
+	//Atributos propios.
 	this.texto=texto;	
+	this.campoTexto; //El campo para capturar el texto donde  aparecerá en el botón.	
+	this.divBoton;
+	this.botonSubirImagenEdicion;
+
+	//Atributos heredados.
 	this.ancho=150;
 	this.alto=30;
 	this.tipo="boton";
 	this.tipoTextual="Botón";
-
-	this.campoTexto; //El campo para capturar el texto donde  aparecerá en el botón.	
+	
 
 }
 

@@ -1,12 +1,44 @@
 var CampoSeleccion=function(){
+	//Atributos propios.
+	this.campoLista;
+	this.campoListaEdicion;	
+	this.campoAgregarElemento;	
+	this.botonAgregarElemento;
+	this.botonQuitarElemento;
+	this.campoVisibles;
+	this.contadorElementosAgregados=0;	
+	//Atributos heredados.
+
 	this.ancho=200;
 	this.alto=30;	
 	this.tipo="campo_seleccion";
-	this.tipoTextual="Campo de selección";
-	this.contadorElementosAgregados=0;
+	this.tipoTextual="Campo de selección";	
 }
 CampoSeleccion.prototype=new Componente();
 
+//Funciones propias.
+CampoSeleccion.prototype.agregarElementoLista=function(){
+	var valor=this.campoAgregarElemento.val();
+	if(!cadenaVacia(valor)){
+		this.campoListaEdicion.append("<option value='"+this.contadorElementosAgregados+"'>"+valor+"</option>");
+		this.campoListaEdicion.val(this.contadorElementosAgregados);
+		this.contadorElementosAgregados++;
+	}
+	this.campoAgregarElemento.val("");	
+	this.campoAgregarElemento.focus();
+}
+
+CampoSeleccion.prototype.quitarElementoLista=function(){
+	var valorQuitar=this.campoListaEdicion.val();
+	this.campoListaEdicion.children().each(function(){
+		if($(this).attr("value")==valorQuitar){
+			$(this).remove();  //Quitar este option.
+			return;
+		}			
+	});
+}
+
+//Funciones heredadas.
 CampoSeleccion.prototype.crearEditable=function(){
 	Componente.prototype.crearEditable.call(this);	
 	this.campoLista=$("<select>");
@@ -62,8 +94,9 @@ CampoSeleccion.prototype.obtenerFichaGeneral=function(){
 	this.campoVisibles=$("<input disabled='true' style='width:50px; float:left; margin-left:5px; height:30px;'>");
 	filaCentro2.append(this.campoVisibles);
 
-
-	this.obtenerFichaGeneral2(new Array("multilinea"));
+	if(this.botonMultilinea)
+		this.botonMultilinea.off("click");
+	this.obtenerFichaGeneral2(new Array("multilinea"));	
 	this.botonMultilinea.on("click",$.proxy(function(){				
 		this.campoVisibles.attr("disabled",this.botonMultilinea.attr("marcado")=="0");
 		this.campoVisibles.focus();
@@ -72,26 +105,7 @@ CampoSeleccion.prototype.obtenerFichaGeneral=function(){
 
 }
 
-CampoSeleccion.prototype.agregarElementoLista=function(event){
-	var valor=this.campoAgregarElemento.val();
-	if(!cadenaVacia(valor)){
-		this.campoListaEdicion.append("<option value='"+this.contadorElementosAgregados+"'>"+valor+"</option>");
-		this.campoListaEdicion.val(this.contadorElementosAgregados);
-		this.contadorElementosAgregados++;
-	}
-	this.campoAgregarElemento.val("");	
-	this.campoAgregarElemento.focus();
-}
 
-CampoSeleccion.prototype.quitarElementoLista=function(event){
-	var valorQuitar=this.campoListaEdicion.val();
-	this.campoListaEdicion.children().each(function(){
-		if($(this).attr("value")==valorQuitar){
-			$(this).remove();  //Quitar este option.
-			return;
-		}			
-	});
-}
 CampoSeleccion.prototype.obtenerTituloEdicion=function(){
 	return "Propiedades campo de selección";
 }

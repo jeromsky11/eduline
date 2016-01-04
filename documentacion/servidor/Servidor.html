@@ -1,0 +1,658 @@
+<html>
+	<style>
+		li{
+			font-size: 18px;
+		}
+		p{
+			line-height: 20px;
+			font-size: 20px;
+		}
+		table{
+			border: solid 2px #aaaaaa;
+		}
+		td{
+			padding:10px;
+		}
+		.tituloTabla td{
+			background-color:#aaaaff;
+		}	
+		tr td{
+			border: solid 1px #bbbbbb;
+		}			
+	</style>
+	<body style='padding-left:30px;'>
+		<h1><a name='servidor'> EL SERVIDOR</a></h1>
+		<p>	
+			El servidor son todos los archivos php que se ejecutan del lado de apache únicamente, es decir, el back-end de la plataforma. Únicamente se usan para manejar la base de datos, recibir peticiones de los clientes y manejar los archivos que subirá el usuario dentro de eduline.
+			<br>
+			Los archivos del lado servidor podrán ser encontrados dentro de la siguiente ruta: <br><br>
+			<font color='red'>/srv/www/html/eduline/servidor/</font>	<br><br>
+			El siguiente listado muestra los recursos encontrados dentro del servidor.
+			<ul>				
+				<li><a href='#conexion_php'>Conexion.php</a></li>				
+				<li><a href='#funciones_globales_php'>FuncionesGlobales.php</a></li>
+				<li><a href='#servidor_php'>Servidor.php</a></li>
+				<li><a href='#usuarios_php'>Usuarios.php</a></li>
+				<li><a href='#area_conocimiento_php'>AreaConocimiento.php</a></li>
+				<li><a href='#materias_php'>Materias.php</a></li>			
+				<li><a href='#cursos_php'>Cursos.php</a></li>
+				<li><a href='#plantillas_php'>Plantillas.php</a></li>
+				<li><a href='#subir_imagen_php'>SubirImagen.php</a></li>
+				<li><a href='#estructura_archivos'>Estructura de Archivos</a></li>
+			</ul>
+		</p>
+		<h2><a name='conexion_php'>Conexion.php</a></h2>
+		<p>	
+			La clase Conexion.php contiene todas las funciones y variables necesarias para hacer la conexión a la base de datos eduline.sql <br><br>
+			El archivo puede ser encontrado en la siguiente ruta: <br><br>
+			<font color='red'>/srv/www/html/eduline/servidor/Conexion.php</font>
+		</p>
+		<h3>Los atributos </h3>
+		<table>
+			<tr class='tituloTabla'>
+				<td>Nombre</td><td>Tipo</td>
+				<td>Descripción</td>
+			</tr>
+			<tr>
+				<td>servidor</td><td>String</td>
+				<td>La url del servidor donde está instalado mysql y la base de datos eduline.sql</td>
+			</tr>
+			<tr>
+				<td>usuario</td><td>String</td>
+				<td>El nombre de usuario necesario para conectarse a eduline.sql</td>
+			</tr>
+			<tr>
+				<td>password</td><td>String</td>
+				<td>La contraseña necesaria para conectarse a eduline.sql</td>
+			</tr>
+			<tr>
+				<td>bd</td><td>String</td>
+				<td>La nombre de la base de datos a la que se debe hacer la conexión</td>
+			</tr>
+			<tr>
+				<td>consulta</td><td>String</td>
+				<td>La consulta sql almecenada para ejecutarse</td>
+			</tr>
+		</table>							
+		<h3>Función conectar()</h3>
+		<p>
+			La función conectar ejecuta todas las acciones necesarias para conectarse a la base de datos que ha sido especificada con el atributo bd. No requiere parámetros puesto que los atributos de la clase deben ser establecidos antes de llamar a la función.</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Devuelve un objeto que maneja los transacciones a la base de datos como consultas, inserciones, actualizaciones y el borrado de registros.
+		</p>				
+		<hr>		
+		<a href='#servidor'>Volver arriba</a>
+		<h2><a name='funciones_globales_php'>FuncionesGlobales.php</a></h2>		
+		<p>
+			La clase FuncionesGlobales es la clase padre de todas aquellas que trabajan las transacciones a la base de datos. Proporciona funciones generales para hacer consultas a la base de datos y procesar los datos obtenidos de mysql. Además el archivo contiene la función revisar sesión, la cuál ayuda a validar la sesión de un usuario cuando visita el sitio de eduline.
+		</p>
+		<h3>Los atributos </h3>
+		<table>
+			<tr class='tituloTabla'>
+				<td>Nombre</td><td>Tipo</td>
+				<td>Descripción</td>		
+			</tr>
+			<tr>
+				<td>conexion</td><td>Conexion</td>
+				<td>Es el objeto que se conecta  a la base de datos</td>		
+			</tr>
+			<tr>
+				<td>enlace</td><td>Object</td>
+				<td>Es el objeto que hace las transacciones a la base de datos después de crearse una conexión</td>		
+			</tr>
+			<tr>
+				<td>consulta</td><td>String</td>
+				<td>Es la variable que cada clase hija deberá establecer antes de hacer una consulta sql a la base de datos</td>
+			</tr>						
+		</table>	
+		<h3>Función ejecutarAccion($accion,$variables)</h3>
+		<p>
+			Es una super función que ejecuta acciones generales para todas las clases hijas
+		</p>			
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>accion:</font>es un string con el nombre de la acción a ejecutar</li>
+				<li> <font style='font-weight:bold'>variables:</font>es un objeto json que especifica todos los pares atributo-valor necesarios que requiere la acción para ser ejecutada</li>
+			</ul>
+
+		</p>
+		<h3>Valores de retorno</h3>
+		<p>
+			La función no devuelve ningún valor pero todos los funciones auxiliares que ejecutan una acción específica deben hacer el echo de un json con los resultados de las peticiones.
+		</p>
+		<h3>Función obtenerFechaActual()</h3>
+		<p>
+			Es una función general que devuelve la fecha del servidor.
+		</p>			
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>zona:</font>es un string con el nombre de la zona horaria de la cual se debe obtener la fecha</li>
+			</ul>
+		</p>
+		<h3>Valores de retorno</h3>
+		<p>
+			No devuelve nada pero debe hacer un echo con la fecha actual en el formato AAAA-MM-DD hh:mm:ss
+		</p>
+		<h3>Función abortarTransaccion()</h3>
+		<p>
+			Cuándo las funciones hijas obtiene un error, la transacción se aborta a través de la función abortar transacción.
+		</p>			
+		<h3>Parámetros</h3>
+		<p>
+			No requiera paŕametros		
+		</p>
+		<h3>Valores de retorno</h3>
+		<p>
+			No devuelve ningún valor
+		</p>
+		<h3>Función hacerConsulta()</h3>
+		<p>
+			Ejecuta una consulta que no debe devolver valores, como una inserción, una elimininación, una actualización, etc. 
+		</p>			
+		<h3>Parámetros</h3>			
+		<p>					
+			No requiere parámetros puesto que ejecuta la consulta sql establecida en la variable global consulta.
+		</p>
+		<h3>Valores de retorno</h3>
+		<p>
+			Devuelve null si la consulta no pudo ser ejecutado por algún error correspondiente a sql, pero si la consulta logró ejecutarse devuelve la string "exitosa".
+		</p>
+		<h3>Función obtenerConsulta()</h3>
+		<p>
+			Ejecuta una consulta que debe devolver valores, regularmente ejecutaría un select
+		</p>			
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>tipoRetorno:</font>es un string que establece la forma en la que los valores deben ser devueltos como son:</li>
+				<ul>
+					<li> <font style='text-decoration:underline'>object:</font>es el valor predeterminado, 		devuelve un único registro el cuál debe ser manejado como un stdClass de php</li>
+					<li> <font style='text-decoration:underline'>array:</font>devuelve un único registro el 	cuál debe ser manejado como un array de php</li>
+					<li> <font style='text-decoration:underline'>valoresObject:</font>devuelve un array de 		registros, cada registro es manejado como un stdClass de php</li>
+					<li> <font style='text-decoration:underline'>valoresArray:</font>devuelve un array de 		registros, cada registro es manejado como un array de php</li>
+				</ul>
+			</ul>
+		</p>
+		<h3>Valores de retorno</h3>
+		<p>
+			Devuelve los resultados de la consulta en el formato que haya establecido el parámetro tipoRetorno. Si la consulta no generó resultados, devuelve un array vacío.
+		</p>
+		<h3>Función convertirArrayObject()</h3>
+		<p>
+			Es una función general que a partir de un objeto de tipo array forma un objeto de tipo stdClass
+		</p>			
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>array</font> es un array con todos los valores que debe convertir a stdClass</li>
+			</ul>
+		</p>
+		<h3>Valores de retorno</h3>
+		<p>
+			Devuelve los valores recibidos en el parámetro array pero ahora encapsulados en un objeto stdClass.
+		</p>		
+		<hr>
+		<a href='#servidor'>Volver arriba</a>		
+
+
+
+
+		<h2><a name='servidor_php'>Servidor.php</a></h2>
+		<p>				
+			El servidor no es una clase sino un archivo php que es llamado a través de un request. Carece de funciones, por lo tanto todo se ejecuta en el flujo principal, en la cuál se valida la sesión y se hace un switch para determinar que clase debe ser llamada para ejecutar la acción.
+			<br><br> El archivo puede ser localizado en la siguiente ruta: <br><br>
+			<font color='red'>/srv/www/html/eduline/servidor/Servidor.php</font>
+		</p>
+		<h3>Los atributos </h3>					
+		<table>
+			<tr class='tituloTabla'>
+				<td>Nombre</td><td>Tipo</td>
+				<td>Descripción</td>
+			</tr>			
+			<tr>
+				<td>accion</td><td>Array</td>
+				<td>El servicio  que se debe ejecutar, el cuál llega como encabezado en el request. La acción es un array en el cuál el primer elemento es el nombre de la clase que tiene el servicio y el segundo elemento es el servicio que se requiere.</td>
+			</tr>			
+			<tr>
+				<td>idUsuario</td><td>int</td>
+				<td>El id en la base de datos del usuario que ya se haya logueado, si no hay usuario logueado, es decir si idUsuario=-1 no se debe ejecutar ninguna acción.</td>
+			</tr>						
+		</table>								
+		<br>									
+		<hr>		
+		<a href='#servidor'>Volver arriba</a>
+
+
+
+
+		<h2><a name='usuarios_php'>Usuarios.php</a></h2>
+		<p>	
+			La clase Usuarios maneja todas las transacciones a la base de datos que corresponde al manejo de usuarios. La clase Usuarios hereda de la clase <a href='#funciones_globales_php'>FuncionesGlobales</a>
+			<br><br> El archivo puede ser localizado en la siguiente ruta: <br><br>
+			<font color='red'>/srv/www/html/eduline/servidor/Usuarios.php</font>
+		</p>
+		<h3>Los atributos </h3>
+		<p> No existen atributos para esta clase.
+
+		<h3>Función ejecutarAccion($accion,$variables)</h3>
+			Función sobreescrita de la clase funciones_globales, se ocupa solo de evaluar los servicios que se ofrecen para los usuarios.
+		<p>
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>accion:</font>es un string con el nombre de la acción a ejecutar</li>
+				<li> <font style='font-weight:bold'>variables:</font>es un objeto json que especifica todos los pares atributo-valor necesarios que requiere la acción para ser ejecutada</li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno			
+		</h3>
+		<p>			
+			La función no devuelve ningún valor pero todos los funciones auxiliares que ejecutan una acción específica deben hacer el echo de un json con los resultados de las peticiones.
+		</p>
+
+		<h3>Función loguear($usuario,$password)</h3>
+			Se utilizar para el logueo del usuario, el cuál debe introducir un password y una contraseña.
+		<p>
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>usuario:</font> es un string con el nombre del usuario que se desea loguear o su correo electrónico</li>
+				<li> <font style='font-weight:bold'>password:</font> es un string con la contraseña capturada por el usuario pero encriptada. </li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno			
+		</h3>
+		<p>			
+			Devuelve un json el cual puede contener los siguientes pares atributo-valor:<br><br>
+			<ul>
+				<li>
+					{idUsuario=>-1,  error=><font style='color:red'> "Consulta inválida" </font>}
+				</li>
+				<li>
+					{idUsuario=>-2,  error=><font style='color:red'> "No existe el usuario" </font>}
+				</li>
+				<li>
+					{idUsuario=>$idUsuario,  error=><font style='color:red'> "" </font>} 
+				</li>
+			</ul>
+		</p>
+
+		<hr>		
+		<a href='#servidor'>Volver arriba</a>
+		<h2><a name='Area_conocimiento_php'>AreaConocimiento.php</a></h2>
+		<p>
+			La clase AreaConocimiento maneja todas las transacciones a la base de datos que corresponden al manejo de las areas de conocimiento. Las areas de conocimiento sirven para que las materias puedan ser  asignadas y agrupadas de acuerdo a los temas que tratan. La clase AreaConocimiento hereda de la clase <a href='#funciones_globales_php'>FuncionesGlobales</a>
+			<font color='red'>/srv/www/html/eduline/servidor/AreaConocimiento.php</font>
+		</p>
+		<h3>Los atributos </h3>
+		<p>
+			No existen atributos para esta clase
+		</p>		
+		<h3>Función ejecutarAccion($accion,$variables)</h3>			
+		<p>
+			Función sobreescrita de la clase FuncionesGlobales, se ocupa solo de evaluar los servicios que se ofrecen para las materias..
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>accion:</font>es un string con el nombre de la acción a ejecutar</li>
+				<li> <font style='font-weight:bold'>variables:</font>es un objeto json que especifica todos los pares atributo-valor necesarios que requiere la acción para ser ejecutada</li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno			
+		</h3>
+		<p>			
+			La función no devuelve ningún valor pero todos los funciones auxiliares que ejecutan una acción específica deben hacer el echo de un json con los resultados de las peticiones.
+		</p>
+		<h3>Función obtenerAreasConocimiento($idArea,$nombre,$descripcion)</h3>
+		<p>
+			Obtiene areas de conocimiento filtradas de acuerdo a los parámetros. Si algún filtro no desea ser utilizado se puede enviar en el parámetro un valor ""
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>idArea:</font> este un entero que especifica si deseas 
+				obtener una única area de conocimiento.</li>
+				<li> <font style='font-weight:bold'>nombre:</font> es un String que indica si se deben filtrar las areas de conocimiento de acuerdo a un nombre específico  </li>
+				<li> <font style='font-weight:bold'>descripcion:</font> es un String que indica si se deben filtrar las areas de conocimiento de acuerdo a un nombre específico  </li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>		
+			Devuelve un array  con las  áreas de conocimiento filtradas de acuerdo a los parámetros.
+		</p>		
+
+		<h3>Función guardar($idArea,$nombre,$descripcion)</h3>
+		<p>
+			Inserta o actualiza (de ahora en adelante guarda) una area de conocimiento en la base de datos dependiendo del valor del parámetro idArea. Los pasos para ejecutar la transacción son los siguientes:
+			<ol>
+				<li>Validar que el nombre del area de conocimiento no esté repetido</li>
+			</ol>
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>idArea:</font> es un entero que indica si se debe insertar o actualizar una area de conocimiento, un -1 indica que se debe insertar una nueva, un valor positivo indica que se deba actualizar la que corresponda con ese id</li>
+				<li> <font style='font-weight:bold'>nombre:</font> Un String con el nombre del area de conocimiento a guardar  </li>
+				<li> <font style='font-weight:bold'>descripcion:</font> Un String con la descripción de la materia a guardar </li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>		
+			Devuelve un json el cual puede contener los siguientes pares atributo-valor:
+			<ul>
+				<li>{idArea=>-1, error=>"El nombre del área de conocimiento ya existe"}</li>
+				<li>{idArea=>-2, error=>"Hubo un error al registrar el área de conocimiento"}</li>
+				<li>{idArea=>$idArea, error=>"Area de conocimiento guardada satisfactoriamente"}</li>
+			</ul>			
+		</p>		
+
+
+		<hr>		
+
+		<a href='#servidor'>Volver arriba</a>
+
+
+		<h2><a name='materias_php'>Materias.php</a></h2>
+		<p>				
+			La clase Materias maneja todas las transacciones a la base de datos que corresponden al manejo de materias. Las materias sirven para que los cursos puedan ser  asignados y agrupados de acuerdo a los temas que tratan. La clase Materias hereda de la clase <a href='#funciones_globales_php'>FuncionesGlobales</a>
+			<br><br> El archivo puede ser localizado en la siguiente ruta: <br><br>
+			<font color='red'>/srv/www/html/eduline/servidor/Materias.php</font>
+		</p>
+		<h3>Los atributos </h3>
+		<p>
+			No existen atributos para esta clase.
+		</p>
+		<h3>Función ejecutarAccion($accion,$variables)</h3>			
+		<p>
+			Función sobreescrita de la clase FuncionesGlobales, se ocupa solo de evaluar los servicios que se ofrecen para las materias..
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>accion:</font>es un string con el nombre de la acción a ejecutar</li>
+				<li> <font style='font-weight:bold'>variables:</font>es un objeto json que especifica todos los pares atributo-valor necesarios que requiere la acción para ser ejecutada</li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno			
+		</h3>
+		<p>			
+			La función no devuelve ningún valor pero todos los funciones auxiliares que ejecutan una acción específica deben hacer el echo de un json con los resultados de las peticiones.
+		</p>
+		<h3>Función obtenerMaterias($idMateria,$nombre,$descripcion,$creditos,$matricula,$idArea)</h3>
+		<p>
+			Obtiene materias agrupadas por areas de conocimiento y filtradas de acuerdo a los parámetros. Si algún filtro no debe ser utilizado, el valor del parámetro debe ser una cadena vacía "".
+		</p>	
+		<h3>Parámetros</h3>
+			<ul>
+				<li> <font style='font-weight:bold'>idMateria:</font> es un entero que indica si se debe obtener una única materia con este id. </li>
+				<li> <font style='font-weight:bold'>nombre:</font> es un String que indica si se deben filtrar las materias de acuerdo a un nombre específico.</li>
+				<li> <font style='font-weight:bold'>descripcion:</font> es un String  que indica si se deben filtrar las materias de acuerdo a una descripción específica.</li>
+				<li> <font style='font-weight:bold'>creditos:</font> es un entero que indica si se deben filtrar las materias de acuerdo a una cantidad específica de créditos</li>
+				<li> <font style='font-weight:bold'>matricula  (pendiente):</font> es un string que indica si se deben filtrar las materias de acuerdo a una matrícula específica</li>
+				<li> <font style='font-weight:bold'>idArea:</font> es un entero que indica el id del área de conocimiento a la cuál deben pertenecer las materias filtradas</li>
+			</ul>
+		<p>
+		</p>		
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>			
+			Devuelve un json con la agrupación de las materias por áreas de conocimiento o un array de registros tipo stdClass con todas las materias pertenecientes a un área de conocimiento específica.
+		</p>
+		<h3>Función guardar($idMateria,$nombre,$descripcion,$creditos,$matricula,$idArea)</h3>
+		<p>
+			Inserta o actualiza (de ahora en adelante guarda) una materia en la base de datos dependiendo del valor del parámetro idMateria. Los pasos para ejecutar la transacción son los siguientes:
+			<ol>
+				<li>Validar que la materia no se repita en el area de conocimiento especificada por el parámetro idArea </li>
+				<li>Validar que el área de conocimiento exista</li>
+				<li>Decidir entre insertar nueva materia o actualizar una, si el parámetro idMateria tiene un valor igual a -1 se inserta si no se actualiza. </li>				
+			</ol>
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<li> <font style='font-weight:bold'>idMateria:</font> es un entero que indica si se debe insertar o actualizar una materia, un -1 significa que se debe insertar una nueva, un valor positivo indica que se debe actualizar la que corresponda con ese id </li>
+			<li> <font style='font-weight:bold'>nombre:</font> Un String con el nombre de la materia a guardar </li>
+			<li> <font style='font-weight:bold'>descripcion: Un string con la descripción de la materia a guardar</font>  </li>
+			<li> <font style='font-weight:bold'>creditos:</font> un entero con el número de créditos que tiene la materia </li>
+			<li> <font style='font-weight:bold'>matricula (pendiente):</font> un string con el número de matrícula de la materia a guardar </li>
+			<li> <font style='font-weight:bold'>idArea</font> un entero con el id correspondiente del área de conocimiento a la cual pertenece la materia a guardar. </li>
+		</p>		
+		<h3>
+			Valores de retorno			
+		</h3>
+		<p>			
+			Devuelve un json el cual puede contener los siguientes pares atributo-valor:<br><br>
+			<ul>
+				<li>
+					{idMateria=>-1,  error=><font style='color:red'> "El nombre de la materia ya existe para esta área de conocimiento" </font>}					
+				</li>
+				<li>
+					{idMateria=>-2,  error=><font style='color:red'> "El área de conocimiento no existe" </font>}					
+				</li>
+				<li>
+					{idMateria=>-3,  error=><font style='color:red'> "Hubo un error al registrar la materia" </font>}					
+				</li>
+				<li>
+					{idMateria=>$idMateria,  error=><font style='color:red'> "Materia guardada satisfactoriamente" </font>}					
+				</li>
+			</ul>
+		</p>				
+		<hr>		
+		<a href='#servidor'>Volver arriba</a>
+
+		
+
+		<h2><a name='cursos_php'>Cursos.php</a></h2>
+		<p>
+			La clase Cursos maneja todas las transacciones a la base de datos que corresponden al manejo de los cursos. Los cursos son el núcleo de eduline, sobre ellos gira toda la información de la plataforma. La clase Cursos hereda de la clase   <a href='#funciones_globales_php'>FuncionesGlobales</a>
+			<font color='red'>/srv/www/html/eduline/servidor/Cursos.php</font>
+		</p>
+		<h3>Los atributos </h3>
+		<p>
+			No existen atributos para esta clase
+		</p>							
+		<h3>Función ejecutarAccion($accion,$variables)</h3>			
+		<p>
+			Función sobreescrita de la clase FuncionesGlobales, se ocupa solo de evaluar los servicios que se ofrecen para los cursos.
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li> <font style='font-weight:bold'>accion:</font>es un string con el nombre de la acción a ejecutar</li>
+				<li> <font style='font-weight:bold'>variables:</font>es un objeto json que especifica todos los pares atributo-valor necesarios que requiere la acción para ser ejecutada</li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno			
+		</h3>
+		<p>			
+			La función no devuelve ningún valor pero todos los funciones auxiliares que ejecutan una acción específica deben hacer el echo de un json con los resultados de las peticiones.
+		</p>
+		<h3>Función obtenerCursos($idCurso,$nombre,$propios,$cursando,$fechaInicio,$fechaCierre,$idMateria,$estado)</h3>
+		<p>
+			Obtiene los cursos filtrados de acuerdo a los parámetros. Si algún filtro no debe ser utilizado, el valor del parámetro debe ser una cadena vacía "".
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li><font style='font-weight:bold'>idCurso:</font> es un entero que indica si se debe obtener un único curso con este id</li>
+				<li><font style='font-weight:bold'>nombre:</font> es un string que indica si se deben filtrar los cursos de acuerdo a un nombre específico</li>
+				<li><font style='font-weight:bold'>propios:</font> es un booleano que indica si se deben obtener cursos administrados por el usuario actual que esté logueado</li>
+				<li><font style='font-weight:bold'>cursando:</font> es un booleano que indica si se deben obtener cursos de los cuales el usuario logueado es alumno, es decir, está cursando</li>
+				<li><font style='font-weight:bold'>fechaInicio:</font> es un String con una fecha en el forma AAAA-MM-DD hh:mm:ss que se usa para filtrar todos los cursos iniciados o a iniciar en esa fecha     <font style='color:red'>(va a haber cambios)</font></li>
+				<li><font style='font-weight:bold'>fechaCierre:</font> es un String con una fecha en el forma AAAA-MM-DD hh:mm:ss que se usa para filtrar todos los cursos terminados o a terminar en esa fecha     <font style='color:red'>(va a haber cambios)</font></li>
+				<li><font style='font-weight:bold'>idMateria:</font> es un entero que indica si se deben filtrar los cursos pertenecientes a la materia que corresponda ese id</li>
+				<li><font style='font-weight:bold'>estado:</font> es un String que indica si se deben filtrar los cursos en un estado específico (editando, publicado, cursando, terminado, eliminado)</li>
+			</ul>			
+		</p>		
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Devuelve un array con los cursos filtrados de acuerdo a los parámetros.
+		</p>				
+		<h3>Función eliminar($idCurso)</h3>
+		<p>
+			Elimina un curso de acuerdo al valor del parámetro idCurso. Entiendase por eliminar al hecho de cambiarle su estado a eliminado, no a la forma convencional de eliminar un registro de la base de datos.
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li><font style='font-weight:bold'>idCurso</font> es un entero con el id del curso a eliminar.</li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>			
+			Devuelve un json el cual puede contener los siguientes pares atributo-valor:
+			<ul>
+				<li>{idCurso=>-1, error=><font color="red">"No pueden eliminar cursos ya publicados}</font></li>
+				<li>{idCurso=>-2, error=><font color="red">"Hubo un error al eliminar el curso}</font></li>
+				<li>{idCurso=>$idCurso, error=><font color="red">Curso eliminado satisfactoriamente</font>}</li>
+			</ul>
+		</p>				
+		<h3>Función guardar($idCurso,$nombre,$descripcion,$fechaInicio,$fechaCierre,$idMateria)</h3>
+		<p>
+			Inserta o actualiza, (de ahora en adelante guarda) un curso en la base de datos dependiendo del valor del parámetro idCurso. Los pasos para ejecutar la transacción son los siguientes:
+			<ol>
+				<li>Verificar que el nombre del curso no exista para la misma materia</li>
+				<li>Verificar que la materia especificada por el parámetro idMateria exista</li>
+				<li>Guardar el curso en la base de datos</li>
+				<li>Si lo que se hizo fué una inserción, registrar el usuario logueado como el administrador del nuevo curso. </li>
+			</ol>
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li><font style='font-weight:bold'>idCurso</font> es un entero que indica si se debe insertar o actualizar un curso, un -1 significa que se debe insertar uno nuevo, un valor positivo indica que se debe actualizar el que corresponda con ese id.</li>
+				<li><font style='font-weight:bold'>nombre</font> un String con el nombre del curso a guardar</li>
+				<li><font style='font-weight:bold'>descripcion</font> un String con la descripcion del curso a guardar</li>
+				<li><font style='font-weight:bold'>fechaInicio</font>  es un String con una fecha en el forma AAAA-MM-DD hh:mm:ss que se usa para establecer la fecha en la que comenzará el curso</li>
+				<li><font style='font-weight:bold'>fechaCierre</font>  
+					es un String con una fecha en el forma AAAA-MM-DD hh:mm:ss que se usa para establecer la fecha en la que terminará el curso
+				</li>
+				<li><font style='font-weight:bold'>idMateria</font>  
+					es un entero con el id correspondiente a la materia a la cual pertenece el curso a guardar.
+				</li>
+			</ul>
+		</p>		
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>			
+			Devuelve un json el cual puede contener los siguientes pares atributo-valor:
+			<ol>
+				<li>{idCurso=>-1, error=><font color="red">"El nombre del curso ya existe para esta materia"</font>}</li>
+				<li>{idCurso=>-2, error=><font color="red">"La materia no existe"</font>}</li>
+				<li>{idCurso=>-3, error=><font color="red">"Hubo un error al guardar el curso"</font>}</li>
+				<li>{idCurso=>-4, error=><font color="red">"Hubo un error al registrar el administrador del curso"</font>}</li>
+				<li>{idCurso=>$idCurso, error=><font color="red">"Curso guardado satisfactoriamente"</font>}</li>
+			</ol>
+
+		</p>		
+		<hr>
+		<a href='#servidor'>Volver arriba</a>
+
+
+		<h2><a name='plantillas_php'>Plantillas.php</a></h2>
+		<p>				
+			<font color='red'>/srv/www/html/eduline/servidor/Plantillas.php</font>
+		</p>
+		<h3>Los atributos </h3>
+		<table>
+			<tr class='tituloTabla'>
+				<td>Nombre</td><td>Tipo</td>
+				<td>Descripción</td>
+			</tr>			
+		</table>							
+		<h3>Función </h3>
+		<p>
+		</p>	
+		<h3>Parámetros</h3>
+		<p>
+		</p>		
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>			
+		</p>				
+		<hr>		
+		<a href='#servidor'>Volver arriba</a>
+
+
+
+
+
+		<h2><a name='subir_imagen_php'>SubirImagen.php</a></h2>
+		<p>	
+			SubirImagen no es una clase sino un archivo php que es llamado cuando se requiere subir una imagen al servidor. Carece de funciones, por lo tanto todo se ejecuta en el flujo principal, en donde además de subir una imagen, deberá hacer una actualización de la nueva url dentro de la base de datos.
+			<br><br>El archivo puede ser localizado dentro de la siguiente ruta:
+			<font color='red'>/srv/www/html/eduline/servidor/SubirImagen.php</font>
+		</p>
+		<h3>Los atributos </h3>
+		<table>
+			<tr class='tituloTabla'>
+				<td>Nombre</td><td>Tipo</td>
+				<td>Descripción</td>
+			</tr>			
+			<tr>
+				<td>nombreArchivo</td><td>String</td>
+				<td>Se usa para conseguir la extensión de  la imagen original y guardar una copia con la misma extensión.</td>
+			</tr>
+			<tr>
+				<td>jsonImagen</td><td>JSON</td>
+				<td>Se usa para recibir especificaciones de donde se va a guardar la referencia de la imagen (url) en la base de datos. Los atributos necesarios a llenar en el json son: tabla,campoSrc,campoID y id</td>
+			</tr>			
+		</table>						
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>	
+			Hace echo de un json, el cuál podrá contener cualquiera de la siguiente estructura:
+			<ul>
+				<li>{id=>-1, error=><font color="red">"No se pudo guardar la imagen en la base de datos"</font>}</li>		
+				<li>{id=>-2, error=><font color="red">"No se pudo guardar la imagen en el servidor"</font>}</li>		
+				<li>{id=>$jsonImagen->id, error=><font color="red">""</font>}</li>	
+			</ul>
+		</p>				
+		<hr>		
+		<a href='#servidor'>Volver arriba</a>
+
+		<a name="estructura_archivos"><h3>Estructura de archivos </h3></a>
+		<table>
+			<tr class="tituloTabla">
+				<td>Ruta</td>
+				<td>Descripción</td>
+			</tr>
+			<tr>
+				<td>imagenes</td>
+				<td>Contiene todas las imágenes o subgrupo de imágenes (carpetas) que subirán los usuarios al servidor</td>
+			</tr>
+			<tr>
+				<td>imagenes/cursos</td>
+				<td>Contiene todas las imágenes o subgrupo de imágenes (carpetas) que tengan que ver con los cursos</td>
+			</tr>
+			<tr>
+				<td>imagenes/cursos/portadas</td>
+				<td>Contiene todas las imágenes que son portadas de algún curso</td>
+			</tr>			
+		</table>
+	</body>
+</html>
