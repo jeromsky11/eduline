@@ -121,17 +121,17 @@
 					"error"=>"Hubo un error al guardar el curso")));	
 				return;
 			}
-			if($idCurso==-1)
-				$idCurso=mysqli_insert_id($this->enlace);
-
-			//Guardar a este usuario como el administrador del curso.			
-			$idUsuario=$_SESSION['idUsuario'];			
-			$this->consulta="insert into administradores_curso set id_usuario=$idUsuario, 
-							id_curso=$idCurso";
-			if(!$this->hacerConsulta()){
-				print(json_encode(array("idCurso"=>-4,
-					"error"=>"Hubo un error al registrar el administrador del curso")));	
-				return;	
+			if($idCurso==-1){
+				$idCurso=mysqli_insert_id($this->enlace);			
+				//Guardar a este usuario como el administrador del curso.			
+				$idUsuario=$_SESSION['idUsuario'];			
+				$this->consulta="insert into administradores_curso set id_usuario=$idUsuario, 
+								id_curso=$idCurso";
+				if(!$this->hacerConsulta()){
+					print(json_encode(array("idCurso"=>-4,
+						"error"=>"Hubo un error al registrar el administrador del curso")));	
+					return;	
+				}
 			}
 
 			print(json_encode(array("idCurso"=>$idCurso,"error"=>"Curso guardado satisfactoriamente")));

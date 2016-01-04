@@ -1,31 +1,115 @@
 //Constructor.
 
 var Componente=function(){
-	this.posX=0; //Es el left
-	this.posY=0; //Es el top.
-	this.ancho=0;  //Es el width
-	this.alto=0;  //Es el alto.
-
-
+	this.posX=0; //Es la distancia horizontal en pixeles del lado izquierdo  del contenedor.
+	this.posY=0; //Es la distancia vertical en pixeles del lado derecho del contenedor.
+	this.ancho=0;  //Es el tamaño en pixeles a lo ancho 
+	this.alto=0;  //Es el tamaño en pixeles a lo alto.
 	this.botonSoloLectura;  //El botón que decide si un componente puede editarse o no.
 	this.botonMultilinea;  //El botón decide si un componente es de múltiple líneas.
-	this.atributos=null;  //El json con todas las propiedades de este componente.
+	this.atributos=null;  //El json que guarda todas las propiedades de este componente.
 	this.campoNombre;  //Durante la edición cuando el usuario escribe el nombre del componente.
-	this.tipo="";  //Este lo establecen las subclases como el tipo del componente.
-	this.tipoTextual="";
+	this.tipo="";  //Este lo establecen las subclases para saber el tipo del componente.
+	//Es equivalente al tipo solo que un texto que debe ser mostrado cuando se desea eliminar el componente
+	this.tipoTextual=""; 
 	this.botonEditar;  //Para abrir la ventana de edición de las propiedades del componente.
-	this.alineadoTexto="left";
-	this.bordeInicialCampos="solid 1px rgb(170, 170, 170)";
-	this.objetoPadre=null;
-	
+	this.alineadoTexto="left"; //Guarda la actual selección del alineado del texto.
+	//Se usa para recuperar el borde inicial de un campo cuando este pasó de ser inválido (con borde rojo)
+	//a válido.
+	this.bordeInicialCampos="solid 1px rgb(170, 170, 170)"; 
+	//Es una referencia a la instancia de la clase que creó este componente y se usa para llamar a 
+	//funciones de clase padre o enviarlo como parámetro en funciones usadas como un objeto y así 
+	//las clases padres recuperen las referencias a ellos mismos.
+	this.objetoPadre=null;	
+	//Los componentes llevan un id que lo identifican como únicos en una lista, con idComponente 
+	//este componente puede solicitarse a su padre que trabaje sobre ellos mismo buscando en 
+	//base al id.
 	this.idComponente=-1;
-	this.nombre="";
+	//Es el nombre que un usuario de la a un componente y así referenciarlo durante el diseño.
+	this.nombre=""; 
+	//Las subclases establecen esta variable en false si requieren ocultar la ficha de diseño.
+	this.existeDiseno=true; 
+	//Es llamada cuando algunos atributos en la edición cambian.
+	this.funcionCambioAtributos=null; 
+	//Valida que un nombre que se le da a este componente no se repita con algún otro de un grupo.
+	this.funcionValidarComponente=null; 			
+ 	
+	this.divContenedor;	//Es el div que contiene todo el diseño gráfico de este componente.
+	this.divBotones;//Un div que contiene un grupo de botones con acciones arealidar sobre el componente.
+	this.botonClonar; //Botón que sirve para crear un componente igualito a esto.
+	this.botonBorrar; //Botón que sirve para borrar este componente de un panel.
+	//Es el div que permite que la ventana de edición aparezca como modal ya que abarca toda la pantalla
+	//y tiene un fondo negro transparente.
+	this.fondoVentanaEdicion; 		
+	//El botón para cerrar la ventana de edición.
+	this.botonCerrarEdicion;
+	this.tabulador;//Un componente gráfico que maneja las fichas de la ventana de edición.
+	this.botonAceptarEdicion; //El botón para guardar los cambios de la ventana de edición.
+	this.botonCancelarEdicion; //El botón para cancelar los cambios de la ventana de edición.
+	this.divFichaGeneral; //Es el div que contiene la ficha general del panel de edicion.
+	//Es un párrafo que tiene el título "animaciones" debe ser atributo porque despues se le cambia 
+	//su ubicación en la ficha general.
+	this.tituloAnimaciones; 
+	//Un input donde se establece en milisegundos el tiempo que tardará el componente al entrar.
+	this.campoDuracionAnimacionEntrada;	
+	//Un comboBox en donde se establece el tipo de animación de salida.
+	this.campoAnimacionSalida;
+	//Un input donde se establece en milisegundos el tiempo que tardará el componente al salir.
+	this.campoDuracionAnimacionSalida;
+	//Un input donde se establece en pixeles la distancia del componente del margen izquierdo.
+	this.campoPosicionIzquierda;
+	//Un input donde se establece en pixeles la distancia del componente del margen derecho.
+	this.campoPosicionDerecha;
+	//Un input donde se establece en pixeles la distancia del componente del margen superior.
+	this.campoPosicionArriba;
+	//Un input donde se establece en pixeles la distancia del componente del margen inferior.
+	this.campoPosicionAbajo;
+	//Un input donde se establece en pixeles el ancho del componente.
+	this.campoAncho;	
+	//Un input donde se establece en pixeles el alto del componente.
+	this.campoAlto;
 
-
-	this.existeDiseno=true; //La ficha de diseno algunos hijos la ocultan.
-
-	this.funcionCambioAtributos=null; //La llama cuando hay un cambio en los atributos.
-	this.funcionValidarComponente=null; //Buscar que los componentes no se repitan en nombre.
+	this.divFichaEventos;//Es el div que contiene la ficha de eventos del panel de edicion.
+	//Un input donde se elige el tipo de evento a procesar.
+	this.campoTipoEvento;
+	//Un area de texto donde el usuario escribirá el código a escribir cuando se de el evento que 
+	//esté seleccionado con la variable campoTipoEvento.
+	this.areaCodigo;	
+	this.divFichaDiseno;//Es el div que contiene la ficha de diseño del panel de edición.
+	//Un select donde se elije el estilo de la letra a usar dentro del componente.
+	this.campoEstiloLetra; 
+	//Un select donde se elije el tamaño de la letra a usar dentro del componente.
+	this.campoTamanoLetra;
+	//Un div donde se marca si letra a usar dentro del componente debe estar en negritas o no.
+	this.botonNegrita;
+	//Un div donde se marca si letra a usar dentro del componente debe estar en cursivas o no.
+	this.botonCursiva;
+	//Un div donde se marca si letra a usar dentro del componente debe estar subrayada o no.
+	this.botonSubrayado;
+	//Un input de tipo color en donde se elije el color del texto componente.
+	this.botonColorLetraCuadro;
+	//Un botón para agregar una listado. //Va a haber cambio.
+	this.botonVinetas; 
+	//Un botón para agregar una listado numero //Va a haber cambio.
+	this.botonVinetasNumeros;
+	//Un div donde se marca si el texto del componente debe estar alineado a la izquierda.
+	this.botonAlinearIzquierda;
+	//Un div donde se marca si el texto del componente debe estar alineado al centro.
+	this.botonAlinearCentro;
+	//Un div donde se marca si el texto del componente debe estar alineado a la derecha.
+	this.botonAlinearDerecha;
+	//Un div donde se marca si el texto del componente debe estar justificado.
+	this.botonJustificar;
+	//Está pendiente para cambio.
+	this.botonInterlineado;
+	//Un input de tipo color en donde se elije el color de fondo del texto componente.
+	this.botonColorFondoCuadro;
+	//Un img para elegir el borde del componente (Faltan cambios) 
+	this.botonBorde;
+	//Un div en donde se previsualiza el diseño del componente antes de ser guardado.
+	this.divVistaPrevia;
+	//Un objeto tipo Ventana para confirmar eliminar un componente.
+    this.ventana;
 }
 
 /****************************************************************************************************/
@@ -50,14 +134,14 @@ Componente.prototype.setAlto=function(alto){
 }
 
 //Nuevos atributos es un json con todos los atributos.
-Componente.prototype.cargarAtributos=function(nuevosAtributos){	
+Componente.prototype.cargarAtributos=function(nuevosAtributos)
+{	
  	this.atributos=nuevosAtributos;
 }
 
 /****************************************************************************************************/
 /****Elementos de diseño propio..*************/
 /****************************************************************************************************/
-
 Componente.prototype.crearEditable=function(){	
 	this.divContenedor=$("<div>");	
 	this.divContenedor.draggable({
@@ -97,7 +181,7 @@ Componente.prototype.crearEditable=function(){
 	},this));	
 }
 
-Componente.prototype.abrirVentanaEdicion=function(event){		
+Componente.prototype.abrirVentanaEdicion=function(){		
 	this.fondoVentanaEdicion=$("<div>");
 	$("body").append(this.fondoVentanaEdicion);
 	this.fondoVentanaEdicion.css({"background-color":"rgba(0,0,0,0.5)","position":"absolute",
@@ -105,16 +189,17 @@ Componente.prototype.abrirVentanaEdicion=function(event){
 	var divVentanaEdicion=$("<div class='divVentanaEdicion'>");
 	this.fondoVentanaEdicion.append(divVentanaEdicion);
 
-	this.divTituloEdicion=$("<div class='divTituloEdicion'>");
-	divVentanaEdicion.append(this.divTituloEdicion);
+	var divTituloEdicion=$("<div class='divTituloEdicion'>");
+	divVentanaEdicion.append(divTituloEdicion);
 
-	this.divTituloTextoEdicion=$("<div class='divTituloTextoEdicion'>");
-	this.divTituloTextoEdicion.html(this.obtenerTituloEdicion());
-	this.divTituloEdicion.append(this.divTituloTextoEdicion);	
+	var divTituloTextoEdicion=$("<div class='divTituloTextoEdicion'>");
+	divTituloTextoEdicion.html(this.obtenerTituloEdicion());
+	divTituloEdicion.append(divTituloTextoEdicion);	
+	
 	if(this.botonCerrarEdicion)
 		this.botonCerrarEdicion.off("click");
 	this.botonCerrarEdicion=$("<div class='botonCerrarEdicion'>");	
-	this.divTituloEdicion.append(this.botonCerrarEdicion);
+	divTituloEdicion.append(this.botonCerrarEdicion);
 	this.botonCerrarEdicion.css("background-image","url("+urlServidor+"/general/objetosGraficos/objetoVentanas/botonCerrar.png)");
 	
 	this.botonCerrarEdicion.on("click",$.proxy(function(){
@@ -124,8 +209,8 @@ Componente.prototype.abrirVentanaEdicion=function(event){
 	this.tabulador=new Tabulador(this.cambioFichaEdicion,this);
 	var divTabulador=$("<div>");
 	divTabulador.css({"position":"absolute","width":"100%","height":"305px","top":"41px"});
-	divVentanaEdicion.append(divTabulador);	
-	divTabulador.append(this.tabulador.cargarObjetos());
+	divVentanaEdicion.append(divTabulador);		
+	divTabulador.append(this.tabulador.cargarObjetos());	
 	this.obtenerFichaGeneral();
 	if(this.existeDiseno)
 		this.obtenerFichaDiseno();
@@ -176,9 +261,6 @@ Componente.prototype.obtenerFichaGeneral=function(){
 	this.campoNombre=$("<input style='width:200px; float:left; margin-left:10px; height:30px;'>");
 	filaCentro3.append(this.campoNombre);
 
-
-
-
 	this.tituloAnimaciones=$("<p style='width:100%; height:30px; margin-top:20px; font-weight:bold; font-size:20px; text-align:center;'>Animaciones</p>");
 	this.divFichaGeneral.append(this.tituloAnimaciones);
 
@@ -190,7 +272,7 @@ Componente.prototype.obtenerFichaGeneral=function(){
 
 	filaCentro.append("<p style='float:left; margin-top:3px;  text-align:right; width:70px;'>Entrada</p>");
 
-	this.campoAnimacionEntrada=$("<select style='margin-left:10px; float:left; width:100px;'>");	
+	this.campoAnimacionEntrada=$("<select style='margin-left:10px; float:left; width:100px;'>");
 	this.campoAnimacionEntrada.html("<option value='no'>No</option> "+
 							 "<option value='arriba_abajo'>Arriba-abajo</option> "+
 							 "<option value='abajo_arriba'>Abajo-arriba</option> "+
@@ -410,11 +492,11 @@ Componente.prototype.obtenerFichaDiseno=function(){
 	this.botonSubrayado.on("click",$.proxy(this.marcarSeleccionBoton,this));
 
 
-	this.botonColorLetra=$("<div style=' width:100px; height:30px; border:solid 2px #eeeeee; float:left; margin-left:40px;'>");
-	filaCentro2.append(this.botonColorLetra);
+	var botonColorLetra=$("<div style=' width:100px; height:30px; border:solid 2px #eeeeee; float:left; margin-left:40px;'>");
+	filaCentro2.append(botonColorLetra);
 	this.botonColorLetraCuadro=$("<input type='color' value='#000000' style='width:60px; height:27px;  margin-left:5px; float:left; border:none; cursor:pointer'>");
-	this.botonColorLetra.append(this.botonColorLetraCuadro);
-	this.botonColorLetra.append("<span style='float:left; margin-left:5px; font-size:20px; margin-top:3px;'>A</span>");	
+	botonColorLetra.append(this.botonColorLetraCuadro);
+	botonColorLetra.append("<span style='float:left; margin-left:5px; font-size:20px; margin-top:3px;'>A</span>");	
 	this.botonColorLetraCuadro.on("change",$.proxy(function(){		
 		this.divVistaPrevia.css("color",this.botonColorLetraCuadro.val());
 	},this));
@@ -468,11 +550,11 @@ Componente.prototype.obtenerFichaDiseno=function(){
 	filaCentro4.append(this.botonInterlineado);
 
 
-	this.botonColorFondo=$("<div style=' width:110px; height:30px; border:solid 2px #eeeeee; float:left; margin-left:30px;'>");
-	filaCentro4.append(this.botonColorFondo);
+	var botonColorFondo=$("<div style=' width:110px; height:30px; border:solid 2px #eeeeee; float:left; margin-left:30px;'>");
+	filaCentro4.append(botonColorFondo);
 	this.botonColorFondoCuadro=$("<input type='color' value='#ffffff' style='width:60px; height:27px; margin-left:5px; float:left; border:none'>");
-	this.botonColorFondo.append(this.botonColorFondoCuadro);
-	this.botonColorFondo.append("<img style='float:left; margin-left:5px; width:25px;'  src='../general/objetosGraficos/iconos/colorFondo.png'></img>");
+	botonColorFondo.append(this.botonColorFondoCuadro);
+	botonColorFondo.append("<img style='float:left; margin-left:5px; width:25px;'  src='../general/objetosGraficos/iconos/colorFondo.png'></img>");
  	this.botonColorFondoCuadro.on("change",$.proxy(function(){		
 		this.divVistaPrevia.css("background-color",this.botonColorFondoCuadro.val());
 	},this));
@@ -514,7 +596,7 @@ Componente.prototype.eliminar=function(objetoPropio){
 	objetoPropio.objetoPadre.eliminarComponente(objetoPropio.idComponente);
 }
 
-Componente.prototype.clickAceptarEdicion=function(event){	
+Componente.prototype.clickAceptarEdicion=function(){	
 	//Por el momento solo quitar la ventana.
 	if(this.validarCambiosEdicion()){  //Validar los cambios en la edición.
 		this.fondoVentanaEdicion.remove();
@@ -574,8 +656,7 @@ Componente.prototype.guardarAtributosEditados=function(){
 		  	color:this.botonColorLetraCuadro.val(),
 		  	alineado:this.alineadoTexto,
 		  	colorFondo:this.botonColorFondoCuadro.val()
-		}
-	//Validar los datos.
+		}	
 	this.atributos={
 		  tipo:this.tipo,
 		  nombre:this.campoNombre.val(),		  
@@ -593,7 +674,7 @@ Componente.prototype.guardarAtributosEditados=function(){
 		  hijo:{
 		  }};		
 
-    //Acomodar el componente de acuerdo a los cambios.
+    //Acomodar el componente de acuerdo a los cambios en el tamaño y la posición.
     if(!cadenaVacia(this.atributos.tamano_posicion.izquierda))
     	this.divContenedor.css("left",this.atributos.tamano_posicion.izquierda+"px");
     else
@@ -629,7 +710,10 @@ Componente.prototype.guardarAtributosEditados=function(){
 
 //Debe cargar los atributos ya seleccionados previamente.
 Componente.prototype.cargarAtributosEdicion=function(){		
-	if(this.atributos && this.atributos.diseno){		
+	//Si ya hubo una edición previa en la ventana de Edición.
+	//Se evalúan las dos porque primero debemos garantizar que this.atributos exista y así poder evaluar
+	//this.atributos.diseno, si this.atributos.diseno existe significa que ya hizo cambios.
+	if(this.atributos && this.atributos.diseno){				
 		this.campoNombre.val(this.atributos.nombre);
 
 		this.campoAnimacionEntrada.val(this.atributos.animacionEntrada.entrada);
@@ -667,7 +751,7 @@ Componente.prototype.cargarAtributosEdicion=function(){
 		this.campoAncho.val(this.atributos.tamano_posicion.ancho);
 		this.campoAlto.val(this.atributos.tamano_posicion.alto);
 	}
-	else{		
+	else{ //Cargar los valores por default.		
 		this.campoNombre.val(this.nombre);
 		if(parseInt(this.divContenedor.css("left")))
 			this.campoPosicionIzquierda.val(parseInt(this.divContenedor.css("left")));

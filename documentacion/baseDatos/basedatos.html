@@ -1,5 +1,371 @@
 <html>
-	<body>
-		<h1> Hola chicos </h1>
+	<style>
+		table{
+			border: solid 2px #aaaaaa;
+		}
+		td{
+			padding:10px;
+		}
+		.tituloTabla td{
+			background-color:#aaaaff;
+		}	
+		tr td{
+			border: solid 1px #bbbbbb;
+		}			
+	</style>
+	<body style='padding-left:30px;'>
+		<h1><a name='base_datos'> LA BASE DE DATOS</a></h1>
+		<p>
+			La base de datos está montada sobre mysql y se puede acceder a ella desde ya sea phpmyadmin o
+			desde mysqlworkbench.<br>			
+			Si desea ve la base de datos en phpmyadmin de click <a target='_blank' href='http://devphpmyadmin.com/'>aquí:</a><br><br>
+			  usuario: <font color='red'>root</font><br>
+			  contraseña: <font color='red'>jero.</font>
+			<br><br>
+			Si desea ver la base de datos en workbench abra el achivo ubicando en la siguiente ruta: <br><br>
+			/srv/wwww/html/eduline/documentacion/baseDatos/eduline.mwb
+
+			Las siguientes tablas son incluídas dentro de la base de datos:<br><br>
+			<ul>
+				<li><a href='#tabla_roles'>Tabla de roles</a></li>				
+				<li><a href='#tabla_usuarios'>Tabla de usuarios</a></li>				
+				<li><a href='#tabla_acciones'>Tabla de acciones</a></li>
+				<li><a href='#tabla_areas_conocimiento'>Tabla de areas de conocimiento</a></li>
+				<li><a href='#tabla_materias'>Tabla de materias</a></li>
+				<li><a href='#tabla_cursos'>Tabla de cursos</a></li>
+			</ul>
+		</p>				
+		<h2><a name='tabla_roles'> La tabla de roles </a></h2>
+		<p>
+		 	La tabla de roles permite agrupa a los usuarios de acuerdo a los permisos que estos tienen dentro de eduline. Cada usuario al ser registrado deberá tener un rol y en base a eso el sistema podrá determinar que acciones se le permiten ejecutar.
+		</p>
+		<h3>Los campos </h3>
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Nombre del campo</td><td>Descripción</td><td>Tablas relacionadas</td><td>¿Valor único?</td><td>valores estaticos</td>
+			</tr>
+			<tr> 
+				<td>id_rol</td><td>De una clave numérica única a cada rol</td><td> <a href='#tabla_usuarios'>usuarios</a>, <a href="#tabla_acciones">acciones</a></td><td>Si</td><td></td>
+			</tr>
+			<tr> 
+				<td>nombre</td><td>Es el nombre del rol que describirá principalmente la característica de los usuarios</td><td> S/R</td><td>Si</td><td></td>
+			</tr>
+			<tr> 
+				<td>descripcion</td><td>Permite dar mas detalles sobre las características de los usuarios que tengan asignado este rol</td><td> S/R</td><td>No</td><td></td>
+			</tr>
+		</table>
+		<h3>Relaciones a otras tablas</h3>			
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Tabla relacionada</td><td>Tipo de relación</td><td>campo relacionado</td><td>Descripción</td>
+			</tr>
+			<tr> 
+				<td><a href='#tabla_usuarios'>usuarios</a></td><td>Uno a muchos</td><td>id_rol</td><td>Cada usuario sabe a que rol pertenece, muchos usuario pueden pertenecer a un rol </td>
+			</tr>
+			<tr> 
+				<td><a href='#tabla_acciones'>acciones</a></td><td>Muchos a muchos</td><td>id_rol</td><td>
+					Pueden haber muchas acciones asignadas a un rol a una acción asignada a muchos roles. Para hacer la relación muchos a muchos se utiliza la tabla roles_acciones. Con este relación el sistema puede determinar que acciones son permitidas a un usuario que se loguea con determinado rol.
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<a href='#base_datos'>Volver arriba</a>
+
+
+
+		<!--La tabla de usuarios !--><!--La tabla de usuarios !--><!--La tabla de usuarios !-->
+		<!--La tabla de usuarios !--><!--La tabla de usuarios !--><!--La tabla de usuarios !-->
+		<!--La tabla de usuarios !--><!--La tabla de usuarios !--><!--La tabla de usuarios !-->
+		<!--La tabla de usuarios !--><!--La tabla de usuarios !--><!--La tabla de usuarios !-->
+		<h2><a name='tabla_usuarios'> La tabla de usuarios </a></h2>
+		<h3>Los campos </h3>
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Nombre del campo</td><td>Descripción</td><td>Tablas relacionadas</td><td>¿Valor único?</td><td>valores estaticos</td>
+			</tr>
+			<tr> 
+				<td>id_usuario</td><td>Da una clave numérica a cada usuario</td>
+				<td>
+					<li><a href='#tabla_acciones'>acciones</a><br></li>
+					<li><a href='#tabla_cursos'>cursos (como administrador)</a><br></li>
+					<li><a href='#tabla_redes_sociales_usuario'>redes_sociales_usuario</a><br></li>
+					<li><a href='#tabla_cursos'>cursos (como alumno)</a><br></li>					
+				</td>
+				<td>Si</td>
+				<td></td>
+			</tr>
+			<tr> 
+				<td>correo</td><td>El correo electrónico con el cual se identifica al usuario</td><td>S/R</td><td>Si</td><td></td>
+			</tr>
+			<tr> 
+				<td>nombre_usuario</td><td>Un nombre con el que un usuario se va identificar</td><td>S/R</td><td>Si</td><td></td>
+			</tr>
+			<tr> 
+				<td>password</td><td>La contraseña del usuario, debe almacenarse en forma encriptada</td><td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr> 
+				<td>nombre</td><td>El nombre de pila de la persona que se está registrando como usuario</td><td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr> 
+				<td>apellido_paterno</td><td>El apellido paterno de la persona que se está registrando como usuario</td><td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr> 
+				<td>apellido_materno</td><td>El apellido materno de la persona que se está registrando como usuario</td><td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr> 
+				<td>id_rol</td><td>Este campo hace referencia al rol con el que este usuario está registrado.</td><td><a href='#tabla_roles'>roles</a></td><td>No</td><td></td>
+			</tr>
+		</table>
+
+		<h3>Relaciones a otras tablas</h3>
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Tabla relacionada</td><td>Tipo de relación</td><td>campo relacionado</td><td>Descripción</td>
+			</tr>
+			<tr>
+				<td><a href='#tabla_acciones'>acciones</a> </td><td>Muchos a muchos</td><td>id_usuario</td><td>Un usuario puede ejecutar muchas acciones o una accion puede ser ejecutada por muchos usuarios, con esta relación le podemos dar permisos específicos a un usuario independientemente de su rol. Para hacer la relación muchos a muchos se usa la tabla usuarios_acciones </td>			
+			</tr>			
+			<tr>
+				<td><a href='#tabla_cursos'>cursos (como administrador)</a> </td><td>Muchos a muchos</td><td>id_usuario</td>
+				<td>Un usuario puede administrar muchos cursos o un curso puede ser administrado por muchos usuarios. Para lograr la relación muchos a muchos se usa la tabla aministradores_curso </td>
+			</tr>
+			<tr>
+				<td><a href='#tabla_redes_sociales_usuario'>redes_sociales_usuarios</a> </td><td>Uno a muchos</td><td>id_usuario</td>
+				<td>Un usuario puede tener muchas redes sociales, una red social solo puede pertener a un solo usuario (Cuando decimos "una red social" nos referimos a un registro en la tabla redes_sociales_usuarios" no a una red social en general) </td>
+			</tr>			
+			<tr>
+				<td><a href='#tabla_alumnos_curso'>cursos (como alumno)</a></td><td>Muchos a muchos</td>
+				<td>id_usuario</td>
+				<td>Un usuario puede ser alumno de muchos cursos, un curso puede tener muchos usuarios como alumnos. Para lograr la relación muchos a muchos se usa la tabla alumnos_curso </td>
+			</tr>
+			<tr> 
+				<td><a href='#tabla_roles'>roles</a></td><td>Muchos a uno</td><td>id_rol</td><td>Muchos usuarios pueden pertenecer a un rol, un usuario solo puede tener un rol</td>
+			</tr>
+		</table>
+		<br><br>
+
+		<a href='#base_datos'>Volver arriba</a>
+
+
+
+
+
+
+
+
+
+
+
+		<!--La tabla de acciones !-->
+		<h2><a name='tabla_acciones'> La tabla de acciones </a></h2>
+		<h3>Los campos </h3>
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Nombre del campo</td><td>Descripción</td><td>Tablas relacionadas</td><td>¿Valor único?</td><td>valores estaticos</td>
+			</tr>
+			<tr> 
+				<td>id_accion</td><td>Da una clave numérica a una acción</td><td><a href='#tabla_roles'>roles</a><br><a href="#tabla_usuarios">usuarios</a></td><td>Si</td>
+				<td>valores estaticos</td>
+			</tr>
+			<tr> 
+				<td>nombre</td><td>Un texto corto para tener una idea de cuál de la acción</td><td>S/R</td>
+				<td>Si</td>
+				<td></td>
+			</tr>
+			<tr> 
+				<td>descripcion</td><td>Un texto mas detallado de tener una idea mas clara de para qué sirve la acción</td><td>S/R</td>
+				<td>No</td>
+				<td></td>
+			</tr>
+		</table>
+		<h3>Relaciones a otras tablas </h3>		
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Tabla relacionada</td><td>Tipo de relación</td><td>campo relacionado</td>
+				<td>Descripción</td>
+			</tr>
+			<tr> 
+				<td><a href='tabla_roles'>roles</a></td><td>Muchos a muchos</td><td>id_accion</td>
+				<td>
+					Puede haber una acción asignada a muchos roles o muchas acciones asignadas a un rol.
+				</td>
+			</tr>
+			<tr> 
+				<td><a href='tabla_usuarios'>usuarios</a></td><td>Muchos a muchos</td><td>id_accion</td>
+				<td>
+					Puede haber una acción asignada a muchos usuarios o un usuario como muchas acciones.
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<a href='#base_datos'>Volver arriba</a>
+
+
+		<!--La tabla areas de conocimiento !--><!--La tabla areas de conocimiento !-->
+
+		<h2><a name='tabla_areas_conocimiento'> La tabla de areas de conocimiento </a></h2>
+		<h3>Los campos </h3>
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Nombre del campo</td><td>Descripción</td><td>Tablas relacionadas</td><td>¿Valor único?</td><td>valores estaticos</td>
+			</tr>
+			<tr> 
+				<td>id_area</td><td>Da una clave numérica a una area de conocimiento</td>
+				<td><a href='#tabla_materias'>materias</a></td><td>Si</td><td></td>
+			</tr>
+			<tr> 
+				<td>nombre</td><td>El nombre del area de conocimiento</td>
+				<td>S/R</td><td>Si</td><td></td>
+			</tr>
+			<tr> 
+				<td>descripcion</td>
+				<td>
+					Una detallada explicación de para qué sirve el área de conocimiento
+				</td>
+				<td>S/R</td><td>No</td><td></td>
+			</tr>
+		</table>
+		<h3>Relaciones a otras tablas </h3>		
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Tabla relacionada</td><td>Tipo de relación</td><td>campo relacionado</td>
+				<td>Descripción</td>
+			</tr>
+			<tr> 
+				<td><a href='#tabla_materias'>materias</a></td><td>Uno a muchos</td><td>id_area</td>
+				<td>
+					Puede haber un área de conocimiento asignada a muchas materias, no puede haber una materia en áreas de conocimiento.
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<a href='#base_datos'>Volver arriba</a>
+
+		<!--La tabla de materias !--><!--La tabla de materias!-->
+
+		<h2><a name='tabla_materias'> La tabla de materias</a></h2>
+		<h3>Los campos </h3>
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Nombre del campo</td><td>Descripción</td><td>Tablas relacionadas</td><td>¿Valor único?</td><td>valores estaticos</td>
+			</tr>
+			<tr> 
+				<td>id_materia</td><td>Da una clave numérica a una materia</td>
+				<td><a href='#tabla_cursos'>cursos</a></td><td>Si</td><td></td>
+			</tr>
+			<tr> 
+				<td>nombre</td><td>El nombre de la materia</td>
+				<td>S/R</td><td>Si</td><td></td>
+			</tr>
+			<tr> 
+				<td>descripcion</td><td>De una detallada explicación de para qué sirve la materia</td>
+				<td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr> 
+				<td>creditos</td><td>Un valor numérico de cuántos créditos vale la materia</td>
+				<td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr> 
+				<td>matricula</td><td>Pendiente</td>
+				<td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr> 
+				<td>id_area_conocimiento</td><td>Campo que establece a qué área de conocimiento pertenece la materia</td>
+				<td><a href='#tabla_areas_conocimiento'>areas_conocimiento</a></td><td>No</td><td></td>
+			</tr>
+		</table>
+
+		<h3>Relaciones a otras tablas </h3>
+		
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Tabla relacionada</td><td>Tipo de relación</td><td>campo relacionado</td>
+				<td>Descripción</td>
+			</tr>
+			<tr> 
+				<td><a href='tabla_cursos'>cursos</a></td><td>Uno a muchos</td><td>id_materia</td>
+				<td>
+					Un curso solo puede ser de una materia y puede haber muchos cursos con la misma materia.
+				</td>
+			</tr>
+			<tr> 
+				<td><a href='tabla_areas_conocimiento'>areas_conocimiento</a></td><td>Muchos a uno</td><td>id_area_conocimiento</td>
+				<td>
+					Una materia solo puede pertenecer a una área de conocimiento. Muchas materias pueden tener la misma área de conocimiento.
+				</td>
+			</tr>
+		</table>		
+		<br><br>
+		<a href='#base_datos'>Volver arriba</a>
+
+		<!--La tabla de cursos !--><!--La tabla de cursos!-->
+		<h2><a name='tabla_cursos'> La tabla de cursos</a></h2>
+		<h3>Los campos </h3>
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Nombre del campo</td><td>Descripción</td><td>Tablas relacionadas</td><td>¿Valor único?</td><td>valores estaticos</td>
+			</tr>
+			<tr> 
+				<td>id_curso</td><td>Da una clave numérica a un curso</td>
+				<td><a href='#tabla_acciones_alumnos_curso'>acciones_alumnos_curso</a></td><td>Si</td><td></td>
+			</tr>				
+			<tr>
+				<td>nombre</td><td>El nombre del curso</td>
+				<td>S/R</td><td>Si</td><td></td>
+			</tr>
+			<tr>
+				<td>descripcion</td><td>Da una explicación detallada de para qué es el curso</td>
+				<td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr>
+				<td>fecha_inicio</td><td>Es la fecha en que debe iniciar el curso</td>
+				<td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr>
+				<td>fecha_cierre</td><td>Es la fecha en que debe terminar el curso</td>
+				<td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr>
+				<td>imagen_portada</td>
+				<td>Es una url hacia el archivo de la imagen que aparecerá en la portada del curso</td>
+				<td>S/R</td><td>No</td><td></td>
+			</tr>
+			<tr>
+				<td>estado</td>
+				<td>Es la situación actual del curso en el tiempo</td>
+				<td>S/R</a></td><td>No</td>
+				<td>editando<br> publicado <br> cursando <br> terminado <br> eliminado</td>
+			</tr>
+			<tr>
+				<td>id_materia</td>
+				<td>La materia de la cuál hablará el curso</td>
+				<td><a href="#tabla_materias">id_materia</a></td><td>No</td>
+				<td></td>
+			</tr>
+		</table>
+		<h3>Relaciones a otras tablas </h3>		
+		<table>
+			<tr class='tituloTabla'> 
+				<td>Tabla relacionada</td><td>Tipo de relación</td><td>campo relacionado</td>
+				<td>Descripción</td>
+			</tr>
+			<tr>
+				<td><a href='tabla_materias'>materias</a></td><td>Muchos a uno</td><td>id_materia</td>
+				<td>
+					Un curso solo puede pertener a una materia, muchos cursos pueden pertenecer a una materia.
+				</td>
+			</tr>
+			<tr>
+				<td><a href='tabla_acciones_alumnos_curso'>acciones_alumnos_curso</a></td>
+				<td>Uno a muchos</td>
+				<td>id_curso</td>
+				<td>
+					Un curso en general puede recibir muchas acciones de muchos usuarios que fungen como alumnos, para guardar las acciones que haga cada usuario se usa esta tabla.
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<a href='#base_datos'>Volver arriba</a>
+
 	</body>
 </html>

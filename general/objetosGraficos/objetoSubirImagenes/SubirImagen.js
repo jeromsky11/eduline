@@ -1,30 +1,30 @@
 var SubirImagen=function(){	    
+
+    //Sirve para saber si debe poner nuevos valores para los campos ancho y alto (si vale true)
+    //o respetar valores previos. (si vale false).   Todo esto desde la ventana de edición.
+
+    this.restablecerDimensiones=true; 
+    //Es el que hace el trabajo independiente de los componentes con una imagen, la carga del explorador 
+    //de archivosm la redimensiona la envía al server, etc cuando está visible en la plantilla.
+    this.botonSubirImagen;
+    //Es el que hace el trabajo independiente de los componentes con una imagen, la carga del explorador
+    //de archivos, la redimensiona, etc cuando está en la ventana de edición.
+    this.botonSubirImagenEdicion;
+
+
+    
+    //Atributos heredados.
     this.ancho=300;
     this.alto=200;
     this.existeDiseno=false;
-    this.restablecerDimensiones=true; 
-    //esta variable sirve para controlar si un usuairo cambia la imagen
-    //Valor a poner valores de ancho y alto, si se pone a mano cuando abrimos la edición, no volver
-    //A poner el ancho y el alto.
 }
 
 SubirImagen.prototype=new Componente;
 
-SubirImagen.prototype.crearEditable=function(){
-    this.imagenExiste=false;    
-    Componente.prototype.crearEditable.call(this);
-
-    this.botonSubirImagen=new BotonSubirImagen();
-    this.botonSubirImagen.ancho=this.ancho
-    this.botonSubirImagen.alto=this.alto;
-    this.botonSubirImagen.debeAjustar=true;
-    this.divContenedor.append(this.botonSubirImagen.cargarObjetos());
-
-}
-
+//Funciones propias.
 //Esto cambia automáticamente los valores del ancho y del alto.
-SubirImagen.prototype.cambioImagenEdicion=function(ancho,alto,objetoPropio){
-
+SubirImagen.prototype.cambioImagenEdicion=function(ancho,alto,objetoPropio){    
+    console.log("Vale "+objetoPropio.restablecerDimensiones);
     if(objetoPropio.restablecerDimensiones){
         objetoPropio.campoAncho.val(ancho);
         objetoPropio.campoAlto.val(alto);
@@ -42,6 +42,20 @@ SubirImagen.prototype.cambioImagenEdicion=function(ancho,alto,objetoPropio){
     }
     objetoPropio.restablecerDimensiones=true;
 }
+
+
+//Funciones heredadas.
+SubirImagen.prototype.crearEditable=function(){
+    Componente.prototype.crearEditable.call(this);
+
+    this.botonSubirImagen=new BotonSubirImagen();
+    this.botonSubirImagen.ancho=this.ancho
+    this.botonSubirImagen.alto=this.alto;
+    this.botonSubirImagen.debeAjustar=true;
+    this.divContenedor.append(this.botonSubirImagen.cargarObjetos());
+
+}
+
 
 SubirImagen.prototype.obtenerFichaGeneral=function(){
     Componente.prototype.obtenerFichaGeneral.call(this);
@@ -65,6 +79,10 @@ SubirImagen.prototype.obtenerFichaGeneral=function(){
     this.obtenerFichaGeneral2(new Array("lectura"));
 }
 
+SubirImagen.prototype.obtenerTituloEdicion=function(){
+    return "Propiedades de la imagen";
+}
+
 
 SubirImagen.prototype.guardarAtributosEditados=function(){    
     Componente.prototype.guardarAtributosEditados.call(this);
@@ -81,9 +99,6 @@ SubirImagen.prototype.guardarAtributosEditados=function(){
      if(this.atributos.hijo.urlImagen!=(urlServidor+"/general/objetosGraficos/objetoSubirImagenes/subirFoto.png")){
         this.botonSubirImagen.cargarImagenManual(this.atributos.hijo.urlImagen,
                     this.atributos.tamano_posicion.ancho,this.atributos.tamano_posicion.alto);
-        
-        /*this.divBotonSubirImagen.css({"width":objetoPropio.ancho+"px","height":objetoPropio.alto+"px",
-                                "border":"none"});*/        
     }
         
 }
@@ -98,44 +113,10 @@ SubirImagen.prototype.cargarAtributosEdicion=function(){
     }
     else
         this.atributos={hijo:{urlImagen:this.botonSubirImagen.iconoSubirImagen.attr("src")}};
-    
-//    console.log(this.atributos.hijo.urlImagen+urlServidor+"/general/objetosGraficos/objetoSubirImagenes/subirFoto.png"));
+
     if(this.atributos.hijo.urlImagen!=(urlServidor+"/general/objetosGraficos/objetoSubirImagenes/subirFoto.png")){
         this.restablecerDimensiones=false;
         this.botonSubirImagenEdicion.cargarImagenManual(this.atributos.hijo.urlImagen);        
     }
 }
-
-
-
-/*
-//Regresa un array con los div del objeto para subir imagen.
-SubirImagen.prototype.cargarObjetos=function(){		
-	this.imagenExiste=false;    
-    var divPadre=$("<div class='divBotonSubirImagen'>");
-    divPadre.css({"width":"400px","height":"268px"});
-    this.formularioSubirImagen=$("<form enctype='multipart/form-data'  method='post'> ");
-    divPadre.append(this.formularioSubirImagen);
-
-    this.botonSubirImagen=$("<input name='botonSubirImagen' type='file' accept='image/*'"+
-                "style='display:none' />");
-    this.formularioSubirImagen.append(this.botonSubirImagen);
-    
-    this.iconoSubirImagen=$("<img  src='../general/objetoSubirImagenes/subirFoto.png' "+
-                        " class='iconoSubirImagen' />");
-
-    this.iconoSubirImagen.css({"width":"360px","height":"240px","left":"20px","top":"19px"});
-    this.formularioSubirImagen.append(this.iconoSubirImagen);
-
-    this.anchoNormal=parseInt(this.iconoSubirImagen.css("width"));
-    this.altoNormal=parseInt(this.iconoSubirImagen.css("height"));
-    this.posIzquierda=this.iconoSubirImagen.css("left");
-    this.posArriba=this.iconoSubirImagen.css("top");    
-    this.anchoMarco=parseInt(divPadre.css("width"));           
-    this.altoMarco=parseInt(divPadre.css("height"));    
-    return new Array(divPadre);
-
-}
-
-*/
 

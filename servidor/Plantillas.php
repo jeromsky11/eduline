@@ -42,7 +42,7 @@
 			if($idPlantilla==-1)
 				$idPlantilla=mysqli_insert_id($this->enlace);
 			//Guardar a este usuario como el administrador de la plantilla.
-			$idUsuario=$_SESSION['idUsuario'];			
+			$idUsuario=$_SESSION['idUsuario'];	
 			$this->consulta="insert into administradores_plantilla set id_usuario=$idUsuario, 
 							id_plantilla=$idPlantilla";
 			if(!$this->hacerConsulta()){

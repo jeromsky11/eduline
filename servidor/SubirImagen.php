@@ -24,10 +24,10 @@
 		$enlace=$conexion->conectar();		
 		mysqli_query($enlace,$consulta);
 		if(mysqli_error($enlace))			
-			print(json_encode(array("idCurso"=>-1,"error"=>"No se pudo guardar la imagen $consulta")));
+			print(json_encode(array("id"=>-1,"error"=>"No se pudo guardar la imagen en la base de datos $consulta")));
 		else			
-			print(json_encode(array("idCurso"=>$jsonImagen->id,"error"=>"")));
+			print(json_encode(array("id"=>$jsonImagen->id,"error"=>"")));
 	}
 	else
-		print(json_encode(array("idCurso"=>$jsonImagen->id,"error"=>"No se pudo guardar la imagen $nombreArchivo")));
+		print(json_encode(array("id"=>-2,"error"=>"No se pudo guardar la imagen en el servidor $nombreArchivo")));
 ?>

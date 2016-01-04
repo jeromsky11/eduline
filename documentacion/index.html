@@ -3,24 +3,75 @@
 	<meta charset="UTF-8">
 	<body>
 		<h1 style='width:100%; text-align:center;'>DOCUMENTACIÓN DE EDULINE</h1>
-		<div id='divCentral' style='background-color:#eeeeee; width:100%;'>
-			<div id='divIndice' style='position:absolute;width:20%; height:100%; overflow-y:scroll; ' >
+		<div id='divCentral' style='width:99%; height:90%; position:absolute;'>
+			<div id='divIndice' style='background-color:#eeeeee; position:absolute;width:20%; height:100%; overflow-y:scroll; ' >
 				<ul>
 					<li> <a href="#" onclick="procesarLink('/documentacion/baseDatos/basedatos.html')"> La base de datos </a></li>
 					<ul>
-						<li> <a href="#"> La tabla de roles</a></li>
-						<li> <a href="#"> La tabla de usuarios</a></li>
+						<li> <a href="#" onclick="procesarLink('/documentacion/baseDatos/basedatos.html#tabla_roles')"> La tabla de roles</a></li>
+
+						<li> <a href="#" onclick="procesarLink('/documentacion/baseDatos/basedatos.html#tabla_usuarios')"> La tabla de usuarios</a></li>
+
+						<li> <a href="#" onclick="procesarLink('/documentacion/baseDatos/basedatos.html#tabla_acciones')"> La tabla de acciones</a></li>
+
+						<li> <a href="#" onclick="procesarLink('/documentacion/baseDatos/basedatos.html#tabla_areas_conocimiento')"> La tabla de areas de conocimiento</a></li>
+
+						<li> <a href="#" onclick="procesarLink('/documentacion/baseDatos/basedatos.html#tabla_materias')"> La tabla de materias</a></li>
+
+						<li> <a href="#" onclick="procesarLink('/documentacion/baseDatos/basedatos.html#tabla_cursos')"> La tabla de cursos</a></li>
 					</ul>
-				</ul>				
+					<li> 
+						<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html')">
+							El servidor
+					 	</a>
+					 	<ul>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#conexion_php')"> Conexion.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#funciones_globales_php')"> FuncionesGloables.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#servidor_php')"> Servidor.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#usuarios_php')"> Usuarios.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#materias_php')"> Materias.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#area_conocimiento_php')">AreaConocimiento.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#cursos_php')"> Cursos.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#plantillas_php')"> Plantillas.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#subir_imagen_php')"> SubirImagen.php</a>
+							</li>
+							<li> 
+								<a href="#" onclick="procesarLink('/documentacion/servidor/Servidor.html#archivos')">Archivos</a>
+							</li>
+						</ul>
+					 </li>
+					 <li> 
+						<a href="#" onclick="procesarLink('/documentacion/cliente/Cliente.html')">
+							El cliente
+					 	</a>
+					 </li>
+				</ul>								
 			</div>
-			<div id='divContenido' style='position:absolute;  left:20%; width:80%; height:100%; overflow-y:scroll; '>				
+			<div id='divContenido' style='position:absolute;  left:20%; width:80%; height:100%;'>				
 			</div>
 		</div>
 	</body>
 	<script>
-
+		procesarLink('/documentacion/cliente/Cliente.html');
 		function procesarLink(url){
-			document.getElementById("divContenido").innerHTML="<object type='text/html' data='"+
+			document.getElementById("divContenido").innerHTML="<object style='width:100%; height:100%; position:absolute' type='text/html' data='"+
 				url+"' ></object>";
 		}
 	</script>
