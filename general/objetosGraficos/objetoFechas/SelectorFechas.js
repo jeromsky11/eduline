@@ -26,11 +26,144 @@ function obtenerFechaCadena(fecha,lenguaje){
 				minutos+":"+segundos;	
 }
 
+
+
+
+
 var SelectorFechas=function(){		
 	this.primeraApertura=true;
 	this.ultimaFechaClick=null;
 	this.inicioIntervalo=-1;	
+
+	this.ancho=200;
+	this.alto=230;
+	this.posZ=1; //Es para tenerlo siempre por delante de otros componentes.
+	this.divSelectorFechas; //Es el que contiene todo el calendario.
+	this.campoFechaTexto; //Es el campo donde aparecerá el valor actual seleccionado.
+
 }
+
+SelectorFechas.prototype=new Componente;
+
+//Funciones heredadas.
+SelectorFechas.prototype.crearEditable=function(){
+	Componente.prototype.crearEditable.call(this);
+	//Cargar el elemento principal.	
+	this.divSelectorFechas=$("<div class='divSelectorFechas'>");	
+	this.divContenedor.append(this.divSelectorFechas);
+	this.divSelectorFechas.css({"z-index":this.posZ,"width":this.ancho});
+	this.divBotones.css({"z-index":this.posZ+1});
+
+	var divCampoFecha=$("<div class='divCampoFecha'>");
+	this.divSelectorFechas.append(divCampoFecha);
+
+	this.campoFechaTexto=$("<input type='text'  readonly >");
+
+	divCampoFecha.append(this.campoFechaTexto);
+
+
+}
+
+
+
+//Devuelve el divSelectorFechas.
+SelectorFechas.prototype.cargarObjetos=function(posZ,ancho){
+	this.posZ=posZ;
+	this.divSelectorFechas=$("<div class='divSelectorFechas'>");	
+	this.divSelectorFechas.css({"z-index":posZ,"width":ancho});
+	this.divCampoFecha=$("<div class='divCampoFecha'>");
+	this.divSelectorFechas.append(this.divCampoFecha);
+	this.campoFechaTexto=$("<input type='text'  readonly >");
+	this.divCampoFecha.append(this.campoFechaTexto);
+	this.botonCalendario=$("<img src='"+urlServidor+"/general/objetosGraficos/objetoFechas/iconoCalendario.png' ></img>");
+	this.divCampoFecha.append(this.botonCalendario);
+
+
+	this.divDesplegable=$("<div class='divDesplegable'>");
+	this.divSelectorFechas.append(this.divDesplegable);
+
+
+	this.divTablaFecha=$("<div class='divTablaFecha'>");	
+	this.divDesplegable.append(this.divTablaFecha);
+	var divMesesAnios=$("<div class='divMesesAnios'>");
+	this.divTablaFecha.append(divMesesAnios);
+
+	this.botonFlechaIzquierda=$("<img  src='"+urlServidor+"/general/objetosGraficos/objetoFechas/iconoMenor.png'> ");
+	this.botonFlechaIzquierda.css({"position":"absolute","left":"0px","top":"15%",
+					"width":"10%","height":"70%","cursor":"pointer"});
+	divMesesAnios.append(this.botonFlechaIzquierda);
+	this.campoMesAnio=$("<div>");
+	this.campoMesAnio.css({"position":"absolute","left":"10%","top":"0px","width":"80%",
+			"height":"100%","text-align":"center","font-weight":"bold","padding-top":"3%",
+			"font-size":"15px","cursor":"pointer"});
+	this.campoMesAnio.html("");
+
+	divMesesAnios.append(this.campoMesAnio);
+
+	this.botonFlechaDerecha=$("<img  src='"+urlServidor+"/general/objetosGraficos/objetoFechas/iconoMayor.png'> ");
+	this.botonFlechaDerecha.css({"position":"absolute","left":"90%","top":"15%",
+					"width":"10%","height":"70%","cursor":"pointer"});
+	divMesesAnios.append(this.botonFlechaDerecha);
+
+	//Cargar la tabla de meses
+	this.tablaDiasFecha=$("<table class='tablaCalendario'>");
+	this.divTablaFecha.append(this.tablaDiasFecha);	
+
+	this.tablaMesesAnio=$("<table class='tablaCalendario columnaCalendario'> ");
+	this.tablaMesesAnio.css("display","none");
+	this.divTablaFecha.append(this.tablaMesesAnio);
+	
+	var meses=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+	this.matrizMeses=[];
+	var tr=$("<tr>");
+	for(var i=0;i<meses.length;i++){		
+		if(i>0 && i%4==0){			
+			this.tablaMesesAnio.append(tr);
+			tr=$("<tr>");
+		}
+		var td=$("<td mes='"+i+"'>"+meses[i]+"</td>");
+		tr.append(td);		
+		this.matrizMeses.push(td);
+	}
+	this.tablaMesesAnio.append(tr);
+
+	//Cargar la tabla de los intervalos.
+	this.tablaIntervaloAnios=$("<table class='tablaCalendario columnaCalendario2'>");
+	this.tablaIntervaloAnios.css("display","none");
+	this.cargarIntervalosAnios();
+	this.divTablaFecha.append(this.tablaIntervaloAnios);
+
+	
+	var divBotonTiempoFecha=$("<div class='botonTiempoFecha'>");
+	this.botonTiempoFecha=$("<img src='"+urlServidor+"/general/objetosGraficos/objetoFechas/relojIcono.png' />");
+	divBotonTiempoFecha.append(this.botonTiempoFecha);
+	this.divDesplegable.append(divBotonTiempoFecha);
+
+	this.matrizDias=[];
+	var diaActual=1;
+	for(var i=0;i<6;i++){
+		var nueva=[];
+		for(var j=0;j<7;j++){
+			nueva.push($("<td style='font-weight:normal; color:black'>"+
+					"1</td>"));
+			diaActual++;
+		}
+		this.matrizDias.push(nueva);
+	}
+
+	this.llenarDiasMes();
+
+	this.llenarTablaHoras();
+
+	this.divDesplegable.append(this.tablaHorasFecha);
+
+	return this.divSelectorFechas;
+}
+
+
+
+
+
 SelectorFechas.prototype.limpiar=function(){
 	this.campoFechaTexto.val("");
 	this.fechaActual=null;
@@ -47,6 +180,7 @@ SelectorFechas.prototype.establecerFecha=function(valor){
 	this.cargarDiasCalendario();
 }
 SelectorFechas.prototype.cargarEventos=function(){
+	return;
 	this.botonCalendario.on("click",$.proxy(this.mostrar,this));
 	this.botonTiempoFecha.on("click",$.proxy(this.cambiarVista,this));	
 	this.botonFlechaIzquierda.on("click",{direccion:-1},$.proxy(this.cambiarMes,this));
@@ -439,99 +573,7 @@ SelectorFechas.prototype.cambiarVista=function(event){
 	}
 }
 
-//Devuelve el divSelectorFechas.
-SelectorFechas.prototype.cargarObjetos=function(posZ,ancho){
-	this.posZ=posZ;
-	this.divSelectorFechas=$("<div class='divSelectorFechas'>");	
-	this.divSelectorFechas.css({"z-index":posZ,"width":ancho});
-	this.divCampoFecha=$("<div class='divCampoFecha'>");
-	this.divSelectorFechas.append(this.divCampoFecha);
-	this.campoFechaTexto=$("<input type='text'  readonly >");
-	this.divCampoFecha.append(this.campoFechaTexto);
-	this.botonCalendario=$("<img src='"+urlServidor+"/general/objetosGraficos/objetoFechas/iconoCalendario.png' ></img>");
-	this.divCampoFecha.append(this.botonCalendario);
 
-
-	this.divDesplegable=$("<div class='divDesplegable'>");
-	this.divSelectorFechas.append(this.divDesplegable);
-
-
-	this.divTablaFecha=$("<div class='divTablaFecha'>");	
-	this.divDesplegable.append(this.divTablaFecha);
-	var divMesesAnios=$("<div class='divMesesAnios'>");
-	this.divTablaFecha.append(divMesesAnios);
-
-	this.botonFlechaIzquierda=$("<img  src='"+urlServidor+"/general/objetosGraficos/objetoFechas/iconoMenor.png'> ");
-	this.botonFlechaIzquierda.css({"position":"absolute","left":"0px","top":"15%",
-					"width":"10%","height":"70%","cursor":"pointer"});
-	divMesesAnios.append(this.botonFlechaIzquierda);
-	this.campoMesAnio=$("<div>");
-	this.campoMesAnio.css({"position":"absolute","left":"10%","top":"0px","width":"80%",
-			"height":"100%","text-align":"center","font-weight":"bold","padding-top":"3%",
-			"font-size":"15px","cursor":"pointer"});
-	this.campoMesAnio.html("");
-
-	divMesesAnios.append(this.campoMesAnio);
-
-	this.botonFlechaDerecha=$("<img  src='"+urlServidor+"/general/objetosGraficos/objetoFechas/iconoMayor.png'> ");
-	this.botonFlechaDerecha.css({"position":"absolute","left":"90%","top":"15%",
-					"width":"10%","height":"70%","cursor":"pointer"});
-	divMesesAnios.append(this.botonFlechaDerecha);
-
-	//Cargar la tabla de meses
-	this.tablaDiasFecha=$("<table class='tablaCalendario'>");
-	this.divTablaFecha.append(this.tablaDiasFecha);	
-
-	this.tablaMesesAnio=$("<table class='tablaCalendario columnaCalendario'> ");
-	this.tablaMesesAnio.css("display","none");
-	this.divTablaFecha.append(this.tablaMesesAnio);
-	
-	var meses=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-	this.matrizMeses=[];
-	var tr=$("<tr>");
-	for(var i=0;i<meses.length;i++){		
-		if(i>0 && i%4==0){			
-			this.tablaMesesAnio.append(tr);
-			tr=$("<tr>");
-		}
-		var td=$("<td mes='"+i+"'>"+meses[i]+"</td>");
-		tr.append(td);		
-		this.matrizMeses.push(td);
-	}
-	this.tablaMesesAnio.append(tr);
-
-	//Cargar la tabla de los intervalos.
-	this.tablaIntervaloAnios=$("<table class='tablaCalendario columnaCalendario2'>");
-	this.tablaIntervaloAnios.css("display","none");
-	this.cargarIntervalosAnios();
-	this.divTablaFecha.append(this.tablaIntervaloAnios);
-
-	
-	var divBotonTiempoFecha=$("<div class='botonTiempoFecha'>");
-	this.botonTiempoFecha=$("<img src='"+urlServidor+"/general/objetosGraficos/objetoFechas/relojIcono.png' />");
-	divBotonTiempoFecha.append(this.botonTiempoFecha);
-	this.divDesplegable.append(divBotonTiempoFecha);
-
-	this.matrizDias=[];
-	var diaActual=1;
-	for(var i=0;i<6;i++){
-		var nueva=[];
-		for(var j=0;j<7;j++){
-			nueva.push($("<td style='font-weight:normal; color:black'>"+
-					"1</td>"));
-			diaActual++;
-		}
-		this.matrizDias.push(nueva);
-	}
-
-	this.llenarDiasMes();
-
-	this.llenarTablaHoras();
-
-	this.divDesplegable.append(this.tablaHorasFecha);
-
-	return this.divSelectorFechas;
-}
 
 SelectorFechas.prototype.llenarDiasMes=function(){
 	var salida="";	

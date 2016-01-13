@@ -14,6 +14,8 @@
 		<link rel="stylesheet" href="../general/objetosGraficos/objetoMenus/BarraMenu.css">
 		<link rel="stylesheet" href="../general/objetosGraficos/objetoTabulador/Tabulador.css">
 		<link rel="stylesheet" href="EditorPlantilla.css">
+		<link rel="stylesheet" href="../general/objetosGraficos/objetoFechas/SelectorFechas.css">
+
 	</head>
 	<body>
 		<!--Incluir una ventana general. !-->
@@ -37,8 +39,9 @@
 	 <script src="../general/objetosGraficos/boton/Boton.js"> </script>	 
 	 <script src="../general/objetosGraficos/campoSeleccion/CampoSeleccion.js"> </script>	
 	 <script src="../general/objetosGraficos/objetoSubirImagenes/SubirImagen.js"> </script>
-	 <script src="../general/objetosGraficos/objetoSubirImagenes/BotonSubirImagen.js"> 
+	 <script src="../general/objetosGraficos/objetoSubirImagenes/BotonSubirImagen.js"> 	 
 	 </script>
+	 <script src="../general/objetosGraficos/objetoFechas/SelectorFechas.js"></script>
 	 <script src="../general/objetosGraficos/objetoMenus/BarraMenu.js"> </script>	 
 	 	 <script src="../general/objetosGraficos/objetoTabulador/Tabulador.js"> </script>	 
 </html>

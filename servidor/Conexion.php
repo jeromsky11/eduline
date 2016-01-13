@@ -2,7 +2,7 @@
 	class Conexion{
 		var $servidor="deveduline.com";
 		var $usuario="root";
-		var $password="jero";
+		var $password="root";
 		var $bd="eduline";
 		var $consulta;
 
