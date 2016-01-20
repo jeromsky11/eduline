@@ -47,11 +47,12 @@ SubirImagen.prototype.cambioImagenEdicion=function(ancho,alto,objetoPropio){
 //Funciones heredadas.
 SubirImagen.prototype.crearEditable=function(){
     Componente.prototype.crearEditable.call(this);
-
     this.botonSubirImagen=new BotonSubirImagen();
     this.botonSubirImagen.ancho=this.ancho
     this.botonSubirImagen.alto=this.alto;
     this.botonSubirImagen.debeAjustar=true;
+
+    
     this.divContenedor.append(this.botonSubirImagen.cargarObjetos());
 
 }

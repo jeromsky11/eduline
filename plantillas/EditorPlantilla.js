@@ -58,7 +58,7 @@ EditorPlantilla.prototype.cargarEventos=function(){
 	this.campoSeleccion.on("dblclick",{ancho:200,alto:30,tipo:"campoSeleccion"},$.proxy(this.agregarNuevoComponente,this));
 	this.boton.on("dblclick",{ancho:150,alto:30,tipo:"boton"},$.proxy(this.agregarNuevoComponente,this));
 	this.campoImagen.on("dblclick",{ancho:300,alto:200,tipo:"imagen"},$.proxy(this.agregarNuevoComponente,this));
-	this.selectorFechas.on("dblclick",{ancho:300,alto:200,tipo:"selectorFechas"},$.proxy(this.agregarNuevoComponente,this));
+	this.selectorFechas.on("dblclick",{ancho:250,alto:30,tipo:"selectorFechas"},$.proxy(this.agregarNuevoComponente,this));
 }
 
 EditorPlantilla.prototype.agregarNuevoComponente=function(event){
@@ -210,7 +210,7 @@ EditorPlantilla.prototype.cargarSelectorComponentesAgregar=function(){
 		helper:this.copiaCampoImagen,
 		drag: $.proxy(function (event, ui){
             this.tipoElementoArrastrando="imagen";
-        },this),
+        },this)
 	});		
 
 	var fila3=$("<div style='height:40px; width:100%; margin-top:20px;'>");
@@ -218,12 +218,14 @@ EditorPlantilla.prototype.cargarSelectorComponentesAgregar=function(){
 	
 	this.selectorFechas=$("<img style='cursor:pointer; width:40px;  height:40px; float:left; margin-left:15%' src='../general/objetosGraficos/iconos/selectorFechas.png' title='Selector de fechas'>");
 	fila3.append(this.selectorFechas);
+
 	this.selectorFechas.draggable({
 		cursor:"move",
 		helper:this.copiaSelectorFechas,
-		drag: $.proxy(function(event,ui){
+
+		drag: $.proxy(function (event,ui){
 			this.tipoElementoArrastrando="selectorFechas";
-		},this);
+		},this)
 	});
 
 }
