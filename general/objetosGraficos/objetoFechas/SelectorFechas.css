@@ -1,8 +1,7 @@
 .divSelectorFechas{
-	position: absolute;
-	z-index: 105;	
-	width: 200px;
-	height: 230px;	
+	position: absolute;	
+	width: 250px;
+	height: auto;	
 }
 .divCampoFecha{
 	position: absolute;

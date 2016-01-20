@@ -20,22 +20,10 @@
 			border: solid 1px #bbbbbb;
 		}			
 	</style>
-	<body style='padding-left:30px;'>
-		<h1><a name='cliente'> EL CLIENTE</a></h1>
-		<p>
-			El cliente son todos los archivos que se ejecutan del lado del navegador, es decir el front-end de la plataforma. Únicamente se usan para crear la interfaz gráfica, hacer peticiones al servidor y manejar los eventos de los usuarios.
-			<ul>				
-				<li><a href="#inicio_sesion">El inicio de sesión</a></li>
-				<li><a href="#inicio">El módulo de Inicio</a></li>
-				<li><a href="#usuarios">El módulo para los usuarios </a></li>
-				<li><a href="#componentes_generales">Los componentes generales</a></li>
-				<li><a href="#areas_conocimiento">Las areas de conocimiento</a></li>				
-				<li><a href="#materias">Las materias</a></li>
-				<li><a href="#cursos">Los cursos</a></li>
-				<li><a href="#plantillas">Las plantillas</a></li>
-			</ul>
-		</p>
-		<h2><a name="componentes_generales">Los componentes generales</a></h2>
+	<meta charset="UTF-8">
+	<body>
+
+		<h1><a name="componentes_generales">Los componentes generales</a></h1>
 		<p>
 			Dentro de la carpeta general podemos encontrar todos los archivos y carpetas que se encargan del manejo de los componentes generales. Los componentes generales, son objetos html que serán usados tanto para el diseño de plantillas como para el diseño de la interfaz gráfica.<br>
 			A continuación se muestra un listado de los archivos relacionados a los componentes generales y enseguida un explicación detallada de cada uno.		
@@ -57,21 +45,27 @@
 			<li>
 				<a href="#objetoSubirImagenes-SubirImagen_js">objetoSubirImagenes/SubirImagen.js</a>
 			</li>
+			<li>
+				<a href="#objetoSubirImagenes-SubirImagen_css">objetoSubirImagenes/SubirImagen.css</a>
+			</li>
+			<li>
+				<a href="#objetoFechas-SelectorFechas_js">objetoFechas/SelectorFechas.js</a>
+			</li>
 		</ul>
 		A continuación se muestran a detalle los archivos relacionados a los componentes generales:<p>
-		<h3><a name='CargadorEstilos_php'>CargadorEstilos.php</a></h3>
+		<h2><font color='magenta'><a name='CargadorEstilos_php'>CargadorEstilos.php</a></font></h2>
 		<p>
 			El cargador de estilos contiene el llamado a las librerías css que serán usadas en cualquier archivo php principal, por ejemplo, importar la librería css de bootstrap o los estilos generales del sitio (general/General.css).
 		</p>
-		<h3><a name='CargadorScripts_php'>CargadorScripts.php</a></h3>
+		<h2><font color='magenta'><a name='CargadorScripts_php'>CargadorScripts.php</a></font></h2>
 		<p>
 			El cargador de scripts contiene el llamado a las librerías js que serán usadas en cualquier archivo php principal, por ejemplo, importar la librería js de bootstrap, el framework de jquery o las variables globales (general/VariablesGlobales.js).
 		</p>			
-		<h3><a name='General_css'>General.css</a></h3>
+		<h2><font color='magenta'><a name='General_css'>General.css</a></font></h2>
 		<p>
 			Contiene todos los estilos generales de la plataforma, es decir, aquellos estilos estándar que serán usados de la misma forma  en cualquier archivo php o js.
 		</p>
-		<h3><a name='VariablesGlobales_js'>VariablesGlobales.js</a></h3>
+		<h2><font color='magenta'><a name='VariablesGlobales_js'>VariablesGlobales.js</a></font></h2>
 		<p>
 			Contiene todas las variables que deberán usarse con la misma instanciación o con el mismo valor dentro de cualquier otro archivo js. Principalmente contiene las variables que instancian una clase una sola vez y para siempre (algo parecido a las variables estáticas de java).
 		</p>
@@ -2067,7 +2061,152 @@
 		</p>		
 		<hr>				
 		<a href='#componentes_generales'>Componentes generales</a>
-		
-		
-	</body>	
+
+		<h2><font color='magenta'><a name='objetoFechas-SelectorFechas_js'></a>objetoFechas/SelectorFechas.js</font></h2>
+		<p>
+			Sirve para mostrar un pequeño calendario en donde el usuario eligirá una fecha, 
+			usando día,mes,año, horas, minutos y segundos.
+		</p>
+		<h3><font color='#0d4036'>Los atributos </font></h3>		
+		<table>	
+			<tr class='tituloTabla'>
+				<td>Nombre</td><td>Tipo</td>
+				<td>Descripción</td>
+			</tr>
+			<tr>
+				<td>primeraApertura</td><td>boolean</td>
+				<td>
+					Se usa para saber si el usuario ya estuvo eligiendo fechas y esa misma mostrar, 
+					si no lo ha hecho se debe conseguir la fecha actual del servidor.</td>
+			</tr>
+			<tr>
+				<td>ultimaFechaClick</td><td>td</td>
+				<td>
+					Se usa para guardar la última fecha seleccionada  (la marcada en azul)y cuando se seleccione otra devolverla
+					a su color negro.
+				</td>
+			</tr>
+			<tr>
+				<td>inicioIntervalo</td><td>int</td>
+				<td>Se usa para saber en que año comenzar cuando el calendario está visualizando un intervalo de años.</td>
+			</tr>
+			<tr>
+				<td>posZ</td><td>int</td>
+				<td>Es para tener el componente siempre por delante de los demás.</td>
+			</tr>
+			<tr>
+				<td>divSelectorFechas</td><td>div</td>
+				<td>Es el que contiene todos los elementos del calendario</td>
+			</tr>
+			<tr>
+				<td>campoFechaTexto</td><td>input</td>
+				<td>Es el campo donde aparecerá la fecha  actual seleccionada</td>
+			</tr>
+			<tr>
+				<td>botonCalendario</td><td>img</td>
+				<td>Es el botón donde se hará click para mostrar u ocultar el calendario.</td>
+			</tr>
+			<tr>
+				<td>divDesplegable</td><td>div</td>
+				<td>Es el div que será mostrado y ocultado, el que contiene el calendario.</td>
+			</tr>
+			<tr>
+				<td>divTablaFecha</td><td>div</td>
+				<td>El div que contendrá las tablas  del calendario (tabla de días, meses o años)</td>
+			</tr>
+			<tr>
+				<td>botonFlechaIzquierda</td><td>img</td>
+				<td>Botón para ir al mes, año o intervalo de años anterior.</td>
+			</tr>
+			<tr>
+				<td>campoMesAnio</td><td>div</td>
+				<td>Campo para desplegar el mes,el año o el intervalo actual del que se está deplegando un calendario.</td>
+			</tr>
+			<tr>
+				<td>botonFlechaDerecha</td><td>img</td>
+				<td>Botón para ir al mes, año o intervalor de años siguiente.</td>
+			</tr>
+			<tr>
+				<td>tablaDiasFecha</td><td>table</td>
+				<td>La tabla gráfica que contiene  días de un mes.</td>
+			</tr>
+			<tr>
+				<td>tablaMesesAnio</td><td>table</td>
+				<td>La tabla gráfica que contiene los meses de un año.</td>
+			</tr>
+			<tr>
+				<td>tablaIntervaloAnios</td><td>table</td>
+				<td>La tabla gráfica que contiene los intervalos de años (12 en 12)</td>
+			</tr>
+			<tr>
+				<td>matrizDias</td><td>Array</td>
+				<td>Guarda los td de los días del mes para quitar y agregar eventos de click.</td>
+			</tr>
+			<tr>
+				<td>matrizMeses</td><td>Array</td>
+				<td>Guarda los td de los meses del año para quitar y agregar eventos de click.</td>
+			</tr>
+			<tr>
+				<td>matrizIntervalos</td><td>Array</td>
+				<td>Guarda los td de los intérvalos de  años para quitar y agregar eventos de click.</td>
+			</tr>			
+		</table>
+		<!--Aquí va la secuencia de funciones !-->
+		<h3><font color='blue'>Función establecerPosZ(posZ)</font></h3>
+		<p>	
+			Sirve para reacomodar frontalmente el selector de fechas, en esta función
+			el div de botones siempre se reacomoda adelante del selector.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li><font style='font-weight:bold'>posZ</font>
+					La nueva posición frontal del selector de fechas.
+				</li>		
+			</ul>
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+		<h3><font color='blue'>Función crearEditable()</font></h3>
+		<p>	
+			Es sobreescrita de la clase Componente.js. Además de crear el diseño estandar de un 
+			componente, agrega el calendario divContenedor.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+
+
+		<h3><font color='#0d4036'>Los eventos</font></h3>
+		<table>
+			<tr class='tituloTabla'>		
+				<td>Nombre</td>
+				<td>Elemento</td>
+				<td>Función donde declara</td>
+				<td>Función donde llamada</td>
+				<td>Descripción</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+
+		<hr>		
+		<a href='#componentes_generales'>Componentes generales</a>
+	</body>
 </html>	

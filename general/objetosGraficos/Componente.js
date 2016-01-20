@@ -148,6 +148,7 @@ Componente.prototype.crearEditable=function(){
 		cursor:'move',
 		containment:'document',
 	});
+	this.divContenedor.attr("class","divContenedor");
 	this.divContenedor.css({"left":this.posX+"px","top":this.posY+"px","position":"absolute","width":this.ancho+"px",
 					"height":this.alto+"px","border":"solid 1px #777777"});
 	
@@ -172,7 +173,7 @@ Componente.prototype.crearEditable=function(){
 
 	this.divContenedor.append(this.divBotones);	
 
-	this.divContenedor.on("hover",$.proxy(function(){
+	this.divContenedor.on("hover",$.proxy(function(){		
 		this.divBotones.css("display","block");
 	},this));
 
@@ -618,7 +619,9 @@ Componente.prototype.marcarSeleccionBoton=function(event){
 		boton.css({"background-color":"#eeeeee","border":"solid 1px #aaaaaa"});
 		boton.attr("marcado",0);
 	}
-	this.actualizarVistaDiseno(this.divVistaPrevia);
+	//Si la ficha de diseno está visible.
+	if(this.existeDiseno)
+		this.actualizarVistaDiseno(this.divVistaPrevia);
 }
 Componente.prototype.marcarSeleccionBotonAlineado=function(event){	
 	//Desmarcar todos.

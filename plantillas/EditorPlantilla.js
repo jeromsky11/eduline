@@ -58,7 +58,7 @@ EditorPlantilla.prototype.cargarEventos=function(){
 	this.campoSeleccion.on("dblclick",{ancho:200,alto:30,tipo:"campoSeleccion"},$.proxy(this.agregarNuevoComponente,this));
 	this.boton.on("dblclick",{ancho:150,alto:30,tipo:"boton"},$.proxy(this.agregarNuevoComponente,this));
 	this.campoImagen.on("dblclick",{ancho:300,alto:200,tipo:"imagen"},$.proxy(this.agregarNuevoComponente,this));
-	this.selectorFechas.on("dblclick",{ancho:200,alto:230,tipo:"selectorFechas"},$.proxy(this.agregarNuevoComponente,this));
+	this.selectorFechas.on("dblclick",{ancho:250,alto:30,tipo:"selectorFechas"},$.proxy(this.agregarNuevoComponente,this));
 }
 
 EditorPlantilla.prototype.agregarNuevoComponente=function(event){
