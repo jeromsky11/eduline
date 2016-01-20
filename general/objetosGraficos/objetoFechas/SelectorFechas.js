@@ -173,7 +173,7 @@ SelectorFechas.prototype.guardarAtributosEditados=function(){
 	this.atributos.hijo={			
 			deshabilitado:this.botonSoloLectura.attr("marcado")
 	};
-	this.botonCalendario.prop("readonly",this.atributos.hijo.deshabilitado==1);		
+	this.botonCalendario.prop("readonly",this.atributos.hijo.deshabilitado==1);
 	//El evento siempre se apaga para que la lógica sea más simple que andar averiguando
 	//si se habilitó o se de deshabilitó y en que estaba previamente.	
 	this.botonCalendario.off("click"); 	
@@ -223,13 +223,22 @@ SelectorFechas.prototype.cargarEventos=function(){
 
 
 //*********Funciones públicas.  *****************//
-
-
 SelectorFechas.prototype.limpiar=function(){
 	this.campoFechaTexto.val("");
 	this.fechaActual=null;
 	this.primeraApertura=true;	
 	this.ocultarGeneral();
+}
+
+//Establece la fecha actual desde alguna clase en inglés.
+SelectorFechas.prototype.establecerFecha=function(valor){	
+	this.primeraApertura=false;
+	//La fecha llega en inglés.
+	var mes=parseInt(""+valor[5]+valor[6]);
+	valor=valor.substr(0,5)+(mes+1)+valor.substr(7,valor.length);	
+	this.fechaActual=new Date(valor);
+	this.campoFechaTexto.val(obtenerFechaCadena(this.fechaActual,"español"));
+	this.cargarDiasCalendario();
 }
 
 
@@ -270,15 +279,17 @@ SelectorFechas.prototype.mostrar=function(event){
 				},this)
 			});
 		}
-		//Cargar simplemente la ventana.
+		//Cargar simplemente el calendario.
 		else{			
 			this.divSelectorFechas.css("z-index",this.posZ+1);			
 			this.divDesplegable.css("display","block");
 			emergenteActiva=this;
 		}
 		//Con esto se logra que el click en cualquier parte de la pantalla sea detectado.		
-		if(event!=null)
+		if(event!=null){
+			$("html").off("click");
 			$("html").on("click",$.proxy(this.ocultar,this));		
+		}
 	}
 	//El calendario debe ocultarse.	
 	else{		
@@ -291,16 +302,16 @@ SelectorFechas.prototype.mostrar=function(event){
 }
 
 
-//Se cambia la vista del calendario.
-SelectorFechas.prototype.cambiarVista=function(event){		
+//Se cambia la vista del calendario, entre fechas u horas.
+SelectorFechas.prototype.cambiarVista=function(){		
 	var actual=this.tablaHorasFecha.css("display");
-	//Hacer que aparezca el calendario de días.
+	//Hacer que aparezca el calendario de fechas.
 	if(actual=="block"){		
 		this.tablaHorasFecha.css("display","none");
 		this.divTablaFecha.css("display","block");
 		this.botonTiempoFecha.attr("src",urlServidor+"/general/objetosGraficos/objetoFechas/relojIcono.png");
 	}
-	//Hacer que aparezca el calendario de horas.
+	//Hacer que aparezca el reloj de horas.
 	else{
 
 		this.tablaHorasFecha.css("display","block");
@@ -309,9 +320,9 @@ SelectorFechas.prototype.cambiarVista=function(event){
 	}
 }
 
-//Se está activa la ventana del calendario ocultarla.
-SelectorFechas.prototype.ocultar=function(event){		
 
+//Se está activa la ventana del calendario ocultarla.
+SelectorFechas.prototype.ocultar=function(){		
 	var actual=this.divDesplegable.css("display");		
 	if(actual=="block")
 		this.ocultarGeneral();		
@@ -325,20 +336,8 @@ SelectorFechas.prototype.ocultarGeneral=function(){
 
 
 
-
-SelectorFechas.prototype.establecerFecha=function(valor){	
-	this.primeraApertura=false;
-	//La fecha llega en inglés.
-	var mes=parseInt(""+valor[5]+valor[6]);
-	valor=valor.substr(0,5)+(mes+1)+valor.substr(7,valor.length);	
-	this.fechaActual=new Date(valor);
-	this.campoFechaTexto.val(obtenerFechaCadena(this.fechaActual,"español"));
-	this.cargarDiasCalendario();
-}
-
-
 //Intercambia la vista entre los días del mes, los meses del año o un intervalo de años.
-SelectorFechas.prototype.cambiarVistaCalendario=function(event){	
+SelectorFechas.prototype.cambiarVistaCalendario=function(){	
 	var vistaActual=this.tablaDiasFecha.css("display");	
 	if(vistaActual=="table" || vistaActual=="block"){ //Cambiar a ver los meses.
 		this.tablaDiasFecha.css("display","none");

@@ -1869,6 +1869,7 @@
 		<p>
 			Esta función no devuelve ningún valor.
 		</p>
+
 		<h3><font color='#0d4036'>Los eventos</font></h3>
 		<table>
 			<tr class='tituloTabla'>		
@@ -2174,7 +2175,7 @@
 		<h3><font color='blue'>Función crearEditable()</font></h3>
 		<p>	
 			Es sobreescrita de la clase Componente.js. Además de crear el diseño estandar de un 
-			componente, agrega el calendario divContenedor.
+			componente, agrega el calendario al divContenedor.
 		</p>
 		<h3>Parámetros</h3>
 		<p>
@@ -2186,7 +2187,190 @@
 		<p>
 			Esta función no devuelve ningún valor.
 		</p>
-
+		<h3><font color='blue'>Función obtenerTituloEdicion()</font></h3>
+		<p>	
+			Es sobreescrita de la clase Componente.js y devuelve el texto que estará como título 
+			en la ventana de edición.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Devuelve un String con el texto estático "Propiedades del selector de fechas".
+		</p>
+		<h3><font color='blue'>Función obtenerFichaGeneral()</font></h3>
+		<p>	
+			Es sobreescrita de la clase Componente.js, además de crear el diseño estándar de la 
+			pestaña general, establece que botonSoloLectura debe estar visible (llamando a la función obtenerFichaGeneral2(new Array("lectura"))).
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+		<h3><font color='blue'>Función guardarAtributosEditados()</font></h3>
+		<p>	
+			Es sobreescrita de la clase Componente.js y además de guardar los valores estándar de la
+			ventana de edición, crea un nuevo nodo para atributos llamado hijo en donde guarda 
+			si el botón estará activo. También activa o desactiva botonCalendario dependiendo
+			de si debe estar o no estar activo el selector de fechas.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requieres parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>		
+		<h3><font color='blue'>Función cargarAtributosEdicion()</font></h3>
+		<p>	
+			Es sobreescrita de la clase Componente.js y además de cargar los valores estándar de 
+			la ventana de edición, marca seleccionado el botónSoloLectura solo si ya hubo atributos 
+			previos guardados.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+		<h3><font color='blue'>Función limpiar()</font></h3>
+		<p>	
+			Reinicia el Selector de fechas a sus valores predeterminados. Si el calendaria está
+			desplegado también se encarga de ocultarlo.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+		<h3><font color='blue'>Función establecerFecha(valor)</font></h3>
+		<p>	
+			Establece el valor para el atributo fechaActual a partir de un valor externo. 
+			Debe asegurarse que el calendario ahora muestre gráficamente la nueva fecha
+			seleccionada usando la función cargarDiasCalendario().
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li><font style='font-weight:bold'>valor</font>
+					Un String con la fecha a establecer, el formato de la fecha es en inglés
+					YYYY-MM-DD.
+				</li>		
+			</ul>
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+		<h3><font color='blue'>Función mostrar(event)</font></h3>
+		<p>	
+			Se ejecuta cuando se da click sobre botonCalendario. Decide si debe ocultar u mostrar
+			el calendario del selector de fechas. Cuando se muestra el calendario por primera vez
+			obtiene la fecha actual del servidor y es la que muestra como predeterminada.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			<ul>
+				<li><font style='font-weight:bold'>event</font>
+					Es la referencia para el botonCalendario, si usa para validar si debe
+					agregar eventos de click al documento de la página. Con esto se logra que 
+					cuando se de click sobre cualquier parte de la pantalla, el calendario se 
+					oculte.
+				</li>		
+			</ul>
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>		
+		<h3><font color='blue'>Función cambiarVista()</font></h3>
+		<p>	
+			Se ejecuta cuando se da click sobre botonTiempoFecha. Decide si debe mostrar el 
+			calendario de fechas o el reloj de horas.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+		<h3><font color='blue'>Función ocultar()</font></h3>
+		<p>	
+			Se ejecuta cuando se da click en cualquier parte de la pantalla. Oculta el calendario
+			si es que está visible.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+		<h3><font color='blue'>Función ocultarGeneral()</font></h3>
+		<p>	
+			Oculta el calendario si es que está visible. Es necesario separarla de la función 
+			ocultar descrita arriba porque ocultar es llamada cuando ocurre un evento de click,
+			mientras que ocultarGeneral puede ser llamada desde cualquier otra clase que desee
+			mostrar una nueva ventana emergente y necesite ocultar la que está activa actualmente.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
+		<h3><font color='blue'>Función cambiarVistaCalendario()</font></h3>
+		<p>	
+			Se ejecuta cuando se da click en el botón campoMesAnio. Intercambia la vista del calendario
+			entre los días del mes, los meses del año o un intervalo de años.
+		</p>
+		<h3>Parámetros</h3>
+		<p>
+			Esta función no requiere parámetros.
+		</p>			
+		<h3>
+			Valores de retorno
+		</h3>
+		<p>
+			Esta función no devuelve ningún valor.
+		</p>
 
 		<h3><font color='#0d4036'>Los eventos</font></h3>
 		<table>
